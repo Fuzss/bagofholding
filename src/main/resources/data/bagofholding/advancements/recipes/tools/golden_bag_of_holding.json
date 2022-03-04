@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bagofholding:golden_bag_of_holding"
+    ]
+  },
+  "criteria": {
+    "has_iron_bag_of_holding": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bagofholding:iron_bag_of_holding"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bagofholding:golden_bag_of_holding"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_bag_of_holding",
+      "has_the_recipe"
+    ]
+  ]
+}

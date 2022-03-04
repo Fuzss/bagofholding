@@ -1,0 +1,25 @@
+{
+  "type": "bagofholding:crafting_special_bag_of_holding_upgrade",
+  "pattern": [
+    "SIS",
+    "ICI",
+    "WIW"
+  ],
+  "key": {
+    "C": {
+      "item": "bagofholding:iron_bag_of_holding"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "I": {
+      "item": "minecraft:gold_ingot"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "bagofholding:golden_bag_of_holding"
+  }
+}

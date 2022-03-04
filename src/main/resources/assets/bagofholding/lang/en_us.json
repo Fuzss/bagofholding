@@ -1,0 +1,9 @@
+{
+  "enchantment.bagofholding.perseverance": "Perseverance",
+  "item.bagofholding.golden_bag_of_holding": "Golden Bag of Holding",
+  "item.bagofholding.iron_bag_of_holding": "Iron Bag of Holding",
+  "item.bagofholding.leather_bag_of_holding": "Leather Bag of Holding",
+  "item.container.tooltip.info": "Hold %s to reveal contents",
+  "item.container.tooltip.shift": "Shift",
+  "tutorial.container.itemInsert.title": "Use a %s"
+}
