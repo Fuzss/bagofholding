@@ -1,7 +1,7 @@
 package fuzs.bagofholding.network.message;
 
-import fuzs.bagofholding.world.inventory.BagInventorySlot;
-import fuzs.bagofholding.world.inventory.BagMenu;
+import fuzs.bagofholding.world.inventory.LockableInventorySlot;
+import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.puzzleslib.network.message.Message;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -38,8 +38,8 @@ public class S2CLockSlotMessage implements Message {
     private static class LockSlotHandler extends PacketHandler<S2CLockSlotMessage> {
         @Override
         public void handle(S2CLockSlotMessage packet, Player player, Object gameInstance) {
-            if (player.containerMenu.containerId == packet.containerId && player.containerMenu instanceof BagMenu menu) {
-                ((BagInventorySlot) menu.getSlot(packet.slotId)).lock();
+            if (player.containerMenu.containerId == packet.containerId && player.containerMenu instanceof BagItemMenu menu) {
+                ((LockableInventorySlot) menu.getSlot(packet.slotId)).lock();
             }
         }
     }

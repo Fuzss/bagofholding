@@ -1,7 +1,7 @@
 package fuzs.bagofholding.client;
 
 import fuzs.bagofholding.BagOfHolding;
-import fuzs.bagofholding.client.gui.screens.inventory.BagScreen;
+import fuzs.bagofholding.client.gui.screens.inventory.BagItemScreen;
 import fuzs.bagofholding.client.gui.screens.inventory.tooltip.ClientContainerItemTooltip;
 import fuzs.bagofholding.client.handler.SlotOverlayHandler;
 import fuzs.bagofholding.registry.ModRegistry;
@@ -30,8 +30,8 @@ public class BagOfHoldingClient {
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent evt) {
         MinecraftForgeClient.registerTooltipComponentFactory(ContainerItemTooltip.class, ClientContainerItemTooltip::new);
-        MenuScreens.register(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.get(), BagScreen::new);
-        MenuScreens.register(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.get(), BagScreen::new);
-        MenuScreens.register(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.get(), BagScreen::new);
+        MenuScreens.register(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.get(), BagItemScreen::new);
+        MenuScreens.register(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.get(), BagItemScreen::new);
+        MenuScreens.register(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.get(), BagItemScreen::new);
     }
 }

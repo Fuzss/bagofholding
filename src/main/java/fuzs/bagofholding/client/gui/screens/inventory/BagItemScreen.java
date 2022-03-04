@@ -2,7 +2,7 @@ package fuzs.bagofholding.client.gui.screens.inventory;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import fuzs.bagofholding.world.inventory.BagMenu;
+import fuzs.bagofholding.world.inventory.BagItemMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -10,11 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
-public class BagScreen extends AbstractContainerScreen<BagMenu> {
+public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
    private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation("textures/gui/container/generic_54.png");
    private final int containerRows;
 
-   public BagScreen(BagMenu p_98409_, Inventory p_98410_, Component p_98411_) {
+   public BagItemScreen(BagItemMenu p_98409_, Inventory p_98410_, Component p_98411_) {
       super(p_98409_, p_98410_, p_98411_);
       this.passEvents = false;
       this.containerRows = p_98409_.getRowCount();

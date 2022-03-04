@@ -5,10 +5,8 @@
   "package": "fuzs.bagofholding.mixin",
   "refmap": "META-INF/bagofholding.refmap.json",
   "mixins": [
-    "ItemMixin",
     "PlayerMixin",
-    "ServerPlaceRecipeMixin",
-    "ShulkerBoxBlockMixin"
+    "ServerPlaceRecipeMixin"
   ],
   "client": [
     "client.TutorialMixin"

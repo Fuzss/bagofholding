@@ -1,6 +1,6 @@
 package fuzs.bagofholding.world.item;
 
-import fuzs.bagofholding.world.inventory.BagContainer;
+import fuzs.bagofholding.world.inventory.SimpleContainerWithSlots;
 import fuzs.bagofholding.world.inventory.tooltip.ContainerItemTooltip;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 
 public class ContainerItemHelper {
     public static SimpleContainer loadItemContainer(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows) {
-        SimpleContainer bagOfHoldingContainer = new BagContainer(containerRows);
+        SimpleContainer bagOfHoldingContainer = new SimpleContainerWithSlots(containerRows);
         if (compoundtag != null && compoundtag.contains("Items")) {
             bagOfHoldingContainer.fromTag(compoundtag.getList("Items", 10));
         }
@@ -37,17 +37,17 @@ public class ContainerItemHelper {
         compoundtag.put("Items", tag);
     }
 
-    public static boolean overrideStackedOnOther(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, Slot slot, ClickAction clickAction, Player player, SoundEvent insertSound, SoundEvent removeSound) {
+    public static boolean overrideStackedOnOther(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, Slot slot, ClickAction clickAction, Player player, Predicate<ItemStack> itemFilter, SoundEvent insertSound, SoundEvent removeSound) {
         if (clickAction != ClickAction.SECONDARY) return false;
         ItemStack hoveredStack = slot.getItem();
         if (hoveredStack.isEmpty()) {
             removeLastStack(compoundtag, tagSupplier, containerRows).ifPresent(stack -> {
                 player.playSound(removeSound, 0.8F, 0.8F + player.getLevel().getRandom().nextFloat() * 0.4F);
-                addStack(compoundtag, tagSupplier, containerRows, slot.safeInsert(stack), BagItem::mayPlaceInBag);
+                addStack(compoundtag, tagSupplier, containerRows, slot.safeInsert(stack), itemFilter);
             });
         } else {
             hoveredStack = slot.safeTake(hoveredStack.getCount(), hoveredStack.getCount(), player);
-            int transferredCount = addStack(compoundtag, tagSupplier, containerRows, hoveredStack, BagItem::mayPlaceInBag);
+            int transferredCount = addStack(compoundtag, tagSupplier, containerRows, hoveredStack, itemFilter);
             hoveredStack.shrink(transferredCount);
             if (!hoveredStack.isEmpty()) {
                 slot.safeInsert(hoveredStack);
@@ -59,7 +59,7 @@ public class ContainerItemHelper {
         return true;
     }
 
-    public static boolean overrideOtherStackedOnMe(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, ItemStack stackOnMe, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess, SoundEvent insertSound, SoundEvent removeSound) {
+    public static boolean overrideOtherStackedOnMe(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, ItemStack stackOnMe, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess, Predicate<ItemStack> itemFilter, SoundEvent insertSound, SoundEvent removeSound) {
         if (clickAction != ClickAction.SECONDARY || !slot.allowModification(player)) return false;
         if (stackOnMe.isEmpty()) {
             removeLastStack(compoundtag, tagSupplier, containerRows).ifPresent((p_186347_) -> {
@@ -67,7 +67,7 @@ public class ContainerItemHelper {
                 slotAccess.set(p_186347_);
             });
         } else {
-            int transferredCount = addStack(compoundtag, tagSupplier, containerRows, stackOnMe, BagItem::mayPlaceInBag);
+            int transferredCount = addStack(compoundtag, tagSupplier, containerRows, stackOnMe, itemFilter);
             if (transferredCount > 0) {
                 player.playSound(insertSound, 0.8F, 0.8F + player.getLevel().getRandom().nextFloat() * 0.4F);
                 stackOnMe.shrink(transferredCount);
@@ -76,8 +76,8 @@ public class ContainerItemHelper {
         return true;
     }
 
-    private static int addStack(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, ItemStack newStack, Predicate<ItemStack> filter) {
-        if (newStack.isEmpty() || !filter.test(newStack)) return 0;
+    private static int addStack(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, ItemStack newStack, Predicate<ItemStack> itemFilter) {
+        if (newStack.isEmpty() || !itemFilter.test(newStack)) return 0;
         SimpleContainer container = loadItemContainer(compoundtag, tagSupplier, containerRows);
         ItemStack remainingStack = container.addItem(newStack);
         return newStack.getCount() - remainingStack.getCount();

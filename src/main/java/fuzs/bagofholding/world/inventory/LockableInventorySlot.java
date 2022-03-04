@@ -4,10 +4,10 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 
-public class BagInventorySlot extends Slot {
+public class LockableInventorySlot extends Slot {
    private boolean locked;
 
-   public BagInventorySlot(Container p_40202_, int p_40203_, int p_40204_, int p_40205_) {
+   public LockableInventorySlot(Container p_40202_, int p_40203_, int p_40204_, int p_40205_) {
       super(p_40202_, p_40203_, p_40204_, p_40205_);
    }
 

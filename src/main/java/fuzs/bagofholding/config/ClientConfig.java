@@ -14,6 +14,8 @@ public class ClientConfig extends AbstractConfig {
     public boolean colorfulTooltips = true;
     @Config(description = "Seeing bag inventory contents requires shift to be held.")
     public boolean contentsRequireShift = true;
+    @Config(name = "render_slot_overlay", description = "Render a white overlay over the slot the next item will be taken out when right-clicking the shulker box item.")
+    public boolean slotOverlay = true;
 
     public ClientConfig() {
         super("");

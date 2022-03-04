@@ -2,8 +2,8 @@ package fuzs.bagofholding.world.item;
 
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.network.message.S2CLockSlotMessage;
-import fuzs.bagofholding.world.inventory.BagInventorySlot;
-import fuzs.bagofholding.world.inventory.BagMenu;
+import fuzs.bagofholding.world.inventory.BagItemMenu;
+import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -22,12 +22,12 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class BagItem extends Item implements Vanishable, RecipesIgnoreTag {
+public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreTag {
     private final int containerRows;
     private final DyeColor backgroundColor;
-    private final BagMenu.BagOfHoldingMenuFactory menuFactory;
+    private final BagItemMenu.BagOfHoldingMenuFactory menuFactory;
 
-    public BagItem(Properties p_41383_, int containerRows, DyeColor backgroundColor, BagMenu.BagOfHoldingMenuFactory menuFactory) {
+    public BagOfHoldingItem(Properties p_41383_, int containerRows, DyeColor backgroundColor, BagItemMenu.BagOfHoldingMenuFactory menuFactory) {
         super(p_41383_);
         this.backgroundColor = backgroundColor;
         this.containerRows = containerRows;
@@ -47,12 +47,12 @@ public class BagItem extends Item implements Vanishable, RecipesIgnoreTag {
 
     @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickAction, Player player) {
-        return ContainerItemHelper.overrideStackedOnOther(stack.getTag(), stack::getOrCreateTag, this.containerRows, slot, clickAction, player, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
+        return ContainerItemHelper.overrideStackedOnOther(stack.getTag(), stack::getOrCreateTag, this.containerRows, slot, clickAction, player, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack stackOnMe, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
-        return ContainerItemHelper.overrideOtherStackedOnMe(stack.getTag(), stack::getOrCreateTag, this.containerRows, stackOnMe, slot, clickAction, player, slotAccess, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
+        return ContainerItemHelper.overrideOtherStackedOnMe(stack.getTag(), stack::getOrCreateTag, this.containerRows, stackOnMe, slot, clickAction, player, slotAccess, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
@@ -75,11 +75,11 @@ public class BagItem extends Item implements Vanishable, RecipesIgnoreTag {
     }
 
     private void lockMySlot(Player player, ItemStack stack) {
-        if (!(player.containerMenu instanceof BagMenu menu)) return;
+        if (!(player.containerMenu instanceof BagItemMenu menu)) return;
         NonNullList<ItemStack> items = menu.getItems();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i) == stack) {
-                ((BagInventorySlot) menu.getSlot(i)).lock();
+                ((LockableInventorySlot) menu.getSlot(i)).lock();
                 BagOfHolding.NETWORK.sendTo(new S2CLockSlotMessage(menu.containerId, i), (ServerPlayer) player);
                 return;
             }

@@ -2,7 +2,7 @@ package fuzs.bagofholding.world.item.crafting;
 
 import com.google.gson.JsonObject;
 import fuzs.bagofholding.registry.ModRegistry;
-import fuzs.bagofholding.world.item.BagItem;
+import fuzs.bagofholding.world.item.BagOfHoldingItem;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -25,12 +25,12 @@ public class BagUpgradeRecipe extends ShapedRecipe {
         ItemStack itemstack = ItemStack.EMPTY;
         for (int i = 0; i < container.getContainerSize(); ++i) {
             ItemStack itemstack1 = container.getItem(i);
-            if (itemstack1.getItem() instanceof BagItem) {
+            if (itemstack1.getItem() instanceof BagOfHoldingItem) {
                 itemstack = itemstack1;
             }
         }
         ItemStack resultItem = super.assemble(container);
-        if (!itemstack.isEmpty() && itemstack.hasTag() && resultItem.getItem() instanceof BagItem) {
+        if (!itemstack.isEmpty() && itemstack.hasTag() && resultItem.getItem() instanceof BagOfHoldingItem) {
             resultItem.setTag(itemstack.getTag().copy());
         }
         return resultItem;

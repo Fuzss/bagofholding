@@ -83,9 +83,11 @@ public class ClientContainerItemTooltip implements ClientTooltipComponent {
    }
 
    private int getLastFilledSlot() {
-      for (int i = this.items.size() - 1; i >= 0; i--) {
-         if (!this.items.get(i).isEmpty()) {
-            return i;
+      if (BagOfHolding.CONFIG.client().slotOverlay) {
+         for (int i = this.items.size() - 1; i >= 0; i--) {
+            if (!this.items.get(i).isEmpty()) {
+               return i;
+            }
          }
       }
       return -1;
