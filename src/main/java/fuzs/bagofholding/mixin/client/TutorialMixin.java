@@ -5,6 +5,7 @@ import fuzs.bagofholding.world.item.BagItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.tutorial.Tutorial;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -24,8 +25,8 @@ public class TutorialMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Minecraft p_175022_, Options p_175023_, CallbackInfo callbackInfo) {
-        this.bagItemTutorial = new ContainerItemTutorial((Tutorial) (Object) this, p_175023_, stack -> stack.getItem() instanceof BagItem);
-        this.shulkerBoxItemTutorial = new ContainerItemTutorial((Tutorial) (Object) this, p_175023_, stack -> Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock);
+        this.bagItemTutorial = new ContainerItemTutorial((Tutorial) (Object) this, p_175023_, stack -> stack.getItem() instanceof BagItem, new TranslatableComponent("tutorial.container.bag_of_holding.name"));
+        this.shulkerBoxItemTutorial = new ContainerItemTutorial((Tutorial) (Object) this, p_175023_, stack -> Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock, new TranslatableComponent("block.minecraft.shulker_box"));
     }
 
     @Inject(method = "onInventoryAction", at = @At("TAIL"))

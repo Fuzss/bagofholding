@@ -3,7 +3,6 @@ package fuzs.bagofholding.client;
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.client.gui.screens.inventory.BagScreen;
 import fuzs.bagofholding.client.gui.screens.inventory.tooltip.ClientContainerItemTooltip;
-import fuzs.bagofholding.client.handler.ShulkerBoxTooltipHandler;
 import fuzs.bagofholding.client.handler.SlotOverlayHandler;
 import fuzs.bagofholding.registry.ModRegistry;
 import fuzs.bagofholding.world.inventory.tooltip.ContainerItemTooltip;
@@ -26,8 +25,6 @@ public class BagOfHoldingClient {
     private static void registerHandlers() {
         SlotOverlayHandler slotOverlayHandler = new SlotOverlayHandler();
         MinecraftForge.EVENT_BUS.addListener(slotOverlayHandler::onDrawForeground);
-        ShulkerBoxTooltipHandler shulkerBoxTooltipHandler = new ShulkerBoxTooltipHandler();
-        MinecraftForge.EVENT_BUS.addListener(shulkerBoxTooltipHandler::onItemTooltip);
     }
 
     @SubscribeEvent

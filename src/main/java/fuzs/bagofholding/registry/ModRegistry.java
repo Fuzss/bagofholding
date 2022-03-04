@@ -32,7 +32,7 @@ public class ModRegistry {
     public static final RegistryObject<MenuType<BagMenu>> IRON_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerRawMenuType("iron_bag_of_holding", () -> BagMenu::threeRows);
     public static final RegistryObject<MenuType<BagMenu>> GOLDEN_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerRawMenuType("golden_bag_of_holding", () -> BagMenu::sixRows);
     public static final RegistryObject<Enchantment> PERSEVERANCE_ENCHANTMENT = REGISTRY.registerEnchantment("perseverance", () -> new PerseveranceEnchantment(Enchantment.Rarity.UNCOMMON, EquipmentSlot.values()));
-    public static final RegistryObject<RecipeSerializer<ShapedRecipe>> BAG_OF_HOLDING_UPGRADE_RECIPE_SERIALIZER = REGISTRY.register((Class<RecipeSerializer<?>>) (Class<?>) RecipeSerializer.class, "crafting_special_bag_of_holding_upgrade", () -> new BagUpgradeRecipe.Serializer());
+    public static final RegistryObject<RecipeSerializer<ShapedRecipe>> BAG_UPGRADE_RECIPE_SERIALIZER = REGISTRY.register((Class<RecipeSerializer<?>>) (Class<?>) RecipeSerializer.class, "crafting_special_bag_upgrade", () -> new BagUpgradeRecipe.Serializer());
 
     private static final CapabilityController CAPABILITIES = CapabilityController.of(BagOfHolding.MOD_ID);
     public static final Capability<BagPerseveranceCapability> BAG_PERSEVERANCE_CAPABILITY = CAPABILITIES.registerPlayerCapability("bag_perseverance", BagPerseveranceCapability.class, player -> new BagPerseveranceCapabilityImpl(), PlayerRespawnStrategy.NEVER, new CapabilityToken<BagPerseveranceCapability>() {});

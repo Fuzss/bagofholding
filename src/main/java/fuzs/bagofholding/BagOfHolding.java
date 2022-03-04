@@ -1,12 +1,12 @@
 package fuzs.bagofholding;
 
+import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.data.ModLanguageProvider;
 import fuzs.bagofholding.data.ModRecipeProvider;
 import fuzs.bagofholding.handler.PlayerRespawnHandler;
 import fuzs.bagofholding.network.message.S2CLockSlotMessage;
 import fuzs.bagofholding.registry.ModRegistry;
-import fuzs.puzzleslib.config.AbstractConfig;
 import fuzs.puzzleslib.config.ConfigHolder;
 import fuzs.puzzleslib.config.ConfigHolderImpl;
 import fuzs.puzzleslib.network.MessageDirection;
@@ -30,7 +30,7 @@ public class BagOfHolding {
 
     public static final NetworkHandler NETWORK = NetworkHandler.of(MOD_ID);
     @SuppressWarnings("Convert2MethodRef")
-    public static final ConfigHolder<AbstractConfig, ServerConfig> CONFIG = ConfigHolder.server(() -> new ServerConfig());
+    public static final ConfigHolder<ClientConfig, ServerConfig> CONFIG = ConfigHolder.of(() -> new ClientConfig(), () -> new ServerConfig());
 
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {

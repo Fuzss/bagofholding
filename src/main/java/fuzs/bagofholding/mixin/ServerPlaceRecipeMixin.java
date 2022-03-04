@@ -2,7 +2,6 @@ package fuzs.bagofholding.mixin;
 
 import fuzs.bagofholding.world.item.RecipesIgnoreTag;
 import net.minecraft.recipebook.ServerPlaceRecipe;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ServerPlaceRecipe.class)
-public abstract class ServerPlaceRecipeMixin<C extends Container> {
+public abstract class ServerPlaceRecipeMixin {
     @Shadow
     protected Inventory inventory;
 

@@ -18,13 +18,15 @@ public class ContainerItemTutorial {
    private final Tutorial tutorial;
    private final Options options;
    private final Predicate<ItemStack> filter;
+   private final Component itemComponent;
    @Nullable
    private TutorialToast toast;
 
-   public ContainerItemTutorial(Tutorial p_175003_, Options p_175004_, Predicate<ItemStack> filter) {
+   public ContainerItemTutorial(Tutorial p_175003_, Options p_175004_, Predicate<ItemStack> filter, Component itemComponent) {
       this.tutorial = p_175003_;
       this.options = p_175004_;
       this.filter = filter;
+      this.itemComponent = itemComponent;
    }
 
    private void showToast() {
@@ -32,7 +34,7 @@ public class ContainerItemTutorial {
          this.tutorial.removeTimedToast(this.toast);
       }
 
-      Component component = new TranslatableComponent("tutorial.container.itemInsert.title");
+      Component component = new TranslatableComponent("tutorial.container.itemInsert.title", this.itemComponent);
       Component component1 = new TranslatableComponent("tutorial.bundleInsert.description");
       this.toast = new TutorialToast(TutorialToast.Icons.RIGHT_CLICK, component, component1, true);
       this.tutorial.addTimedToast(this.toast, 160);

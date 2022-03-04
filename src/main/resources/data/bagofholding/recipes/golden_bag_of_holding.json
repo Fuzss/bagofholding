@@ -1,5 +1,5 @@
 {
-  "type": "bagofholding:crafting_special_bag_of_holding_upgrade",
+  "type": "bagofholding:crafting_special_bag_upgrade",
   "pattern": [
     "SIS",
     "ICI",

@@ -38,7 +38,7 @@ public class BagUpgradeRecipe extends ShapedRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRegistry.BAG_OF_HOLDING_UPGRADE_RECIPE_SERIALIZER.get();
+        return ModRegistry.BAG_UPGRADE_RECIPE_SERIALIZER.get();
     }
 
     public static class Serializer extends ShapedRecipe.Serializer {

@@ -95,15 +95,13 @@ public class ContainerItemHelper {
     }
 
     public static Optional<TooltipComponent> getTooltipImage(@Nullable CompoundTag compoundtag, Supplier<CompoundTag> tagSupplier, int containerRows, @Nullable DyeColor backgroundColor) {
-        NonNullList<ItemStack> items;
         if (compoundtag == null || !compoundtag.contains("Items")) {
-            items = NonNullList.withSize(containerRows * 9, ItemStack.EMPTY);
-        } else {
-            items = NonNullList.create();
-            SimpleContainer container = loadItemContainer(compoundtag, tagSupplier, containerRows);
-            for (int i = 0; i < container.getContainerSize(); i++) {
-                items.add(container.getItem(i));
-            }
+            return Optional.empty();
+        }
+        NonNullList<ItemStack> items = NonNullList.create();
+        SimpleContainer container = loadItemContainer(compoundtag, tagSupplier, containerRows);
+        for (int i = 0; i < container.getContainerSize(); i++) {
+            items.add(container.getItem(i));
         }
         return Optional.of(new ContainerItemTooltip(items, containerRows, backgroundColor));
     }

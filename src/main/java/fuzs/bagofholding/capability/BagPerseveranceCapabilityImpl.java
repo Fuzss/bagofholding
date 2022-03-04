@@ -1,6 +1,7 @@
 package fuzs.bagofholding.capability;
 
 import com.google.common.collect.Lists;
+import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.registry.ModRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -28,7 +29,9 @@ public class BagPerseveranceCapabilityImpl implements BagPerseveranceCapability 
             ItemStack itemstack = inventory.getItem(i);
             if (!itemstack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.PERSEVERANCE_ENCHANTMENT.get(), itemstack) > 0) {
                 inventory.removeItemNoUpdate(i);
-                this.decreaseEnchantmentLevel(ModRegistry.PERSEVERANCE_ENCHANTMENT.get(), itemstack);
+                if (player.getRandom().nextDouble() < BagOfHolding.CONFIG.server().enchLevelLossChance) {
+                    this.decreaseEnchantmentLevel(ModRegistry.PERSEVERANCE_ENCHANTMENT.get(), itemstack);
+                }
                 this.bags.add(itemstack);
             }
         }
