@@ -20,14 +20,15 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
 import java.util.Optional;
+import java.util.function.IntSupplier;
 import java.util.stream.Stream;
 
 public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreTag {
-    private final int containerRows;
+    private final IntSupplier containerRows;
     private final DyeColor backgroundColor;
-    private final BagItemMenu.BagOfHoldingMenuFactory menuFactory;
+    private final BagItemMenu.Factory menuFactory;
 
-    public BagOfHoldingItem(Properties p_41383_, int containerRows, DyeColor backgroundColor, BagItemMenu.BagOfHoldingMenuFactory menuFactory) {
+    public BagOfHoldingItem(Properties p_41383_, IntSupplier containerRows, DyeColor backgroundColor, BagItemMenu.Factory menuFactory) {
         super(p_41383_);
         this.backgroundColor = backgroundColor;
         this.containerRows = containerRows;
@@ -46,13 +47,19 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     }
 
     @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        // changes to the tag otherwise trigger the re-equip animation
+        return slotChanged;
+    }
+
+    @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickAction, Player player) {
-        return ContainerItemHelper.overrideStackedOnOther(stack.getTag(), stack::getOrCreateTag, this.containerRows, slot, clickAction, player, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
+        return ContainerItemHelper.overrideStackedOnOther(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt(), slot, clickAction, player, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack stackOnMe, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
-        return ContainerItemHelper.overrideOtherStackedOnMe(stack.getTag(), stack::getOrCreateTag, this.containerRows, stackOnMe, slot, clickAction, player, slotAccess, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
+        return ContainerItemHelper.overrideOtherStackedOnMe(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt(), stackOnMe, slot, clickAction, player, slotAccess, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
@@ -69,7 +76,7 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     private MenuProvider getMenuProvider(ItemStack stack) {
         return new SimpleMenuProvider((containerId, inventory, player) -> {
-            SimpleContainer container = ContainerItemHelper.loadItemContainer(stack.getTag(), stack::getOrCreateTag, this.containerRows);
+            SimpleContainer container = ContainerItemHelper.loadItemContainer(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt());
             return this.menuFactory.create(containerId, inventory, container);
         }, stack.getHoverName());
     }
@@ -88,13 +95,13 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        return ContainerItemHelper.getTooltipImage(stack.getTag(), stack::getOrCreateTag, this.containerRows, this.backgroundColor);
+        return ContainerItemHelper.getTooltipImage(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt(), this.backgroundColor);
     }
 
     @Override
     public void onDestroyed(ItemEntity itemEntity) {
         Stream.Builder<ItemStack> builder = Stream.builder();
-        SimpleContainer container = ContainerItemHelper.loadItemContainer(itemEntity.getItem().getTag(), itemEntity.getItem()::getOrCreateTag, this.containerRows);
+        SimpleContainer container = ContainerItemHelper.loadItemContainer(itemEntity.getItem().getTag(), itemEntity.getItem()::getOrCreateTag, this.containerRows.getAsInt());
         for (int i = 0; i < container.getContainerSize(); i++) {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {

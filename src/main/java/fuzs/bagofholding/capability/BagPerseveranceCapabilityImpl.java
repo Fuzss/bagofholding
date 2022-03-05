@@ -27,10 +27,10 @@ public class BagPerseveranceCapabilityImpl implements BagPerseveranceCapability 
         Inventory inventory = player.getInventory();
         for (int i = 0; i < inventory.getContainerSize(); ++i) {
             ItemStack itemstack = inventory.getItem(i);
-            if (!itemstack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.PERSEVERANCE_ENCHANTMENT.get(), itemstack) > 0) {
+            if (!itemstack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(ModRegistry.PRESERVATION_ENCHANTMENT.get(), itemstack) > 0) {
                 inventory.removeItemNoUpdate(i);
                 if (player.getRandom().nextDouble() < BagOfHolding.CONFIG.server().enchLevelLossChance) {
-                    this.decreaseEnchantmentLevel(ModRegistry.PERSEVERANCE_ENCHANTMENT.get(), itemstack);
+                    this.decreaseEnchantmentLevel(ModRegistry.PRESERVATION_ENCHANTMENT.get(), itemstack);
                 }
                 this.bags.add(itemstack);
             }

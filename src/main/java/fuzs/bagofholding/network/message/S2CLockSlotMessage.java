@@ -1,7 +1,7 @@
 package fuzs.bagofholding.network.message;
 
-import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
+import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import fuzs.puzzleslib.network.message.Message;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -21,13 +21,13 @@ public class S2CLockSlotMessage implements Message {
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeByte(this.containerId);
-        buf.writeByte(this.slotId);
+        buf.writeShort(this.slotId);
     }
 
     @Override
     public void read(FriendlyByteBuf buf) {
         this.containerId = buf.readByte();
-        this.slotId = buf.readByte();
+        this.slotId = buf.readShort();
     }
 
     @Override

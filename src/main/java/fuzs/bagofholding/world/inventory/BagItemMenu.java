@@ -1,5 +1,6 @@
 package fuzs.bagofholding.world.inventory;
 
+import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.registry.ModRegistry;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,29 +13,30 @@ import net.minecraft.world.item.ItemStack;
 public class BagItemMenu extends AbstractContainerMenu {
    private final Container container;
    private final int containerRows;
+   private int hotbarStartIndex;
 
-   public static BagItemMenu oneRow(int containerId, Inventory inventory) {
-      return new BagItemMenu(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, 1);
+   public static BagItemMenu leatherBag(int containerId, Inventory inventory) {
+      return new BagItemMenu(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, BagOfHolding.CONFIG.server().leatherBagRows);
    }
 
-   public static BagItemMenu threeRows(int containerId, Inventory inventory) {
-      return new BagItemMenu(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, 3);
+   public static BagItemMenu ironBag(int containerId, Inventory inventory) {
+      return new BagItemMenu(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, BagOfHolding.CONFIG.server().ironBagRows);
    }
 
-   public static BagItemMenu sixRows(int containerId, Inventory inventory) {
-      return new BagItemMenu(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, 6);
+   public static BagItemMenu goldenBag(int containerId, Inventory inventory) {
+      return new BagItemMenu(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, BagOfHolding.CONFIG.server().goldenBagRows);
    }
 
-   public static BagItemMenu oneRow(int containerId, Inventory inventory, Container container) {
-      return new BagItemMenu(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, container, 1);
+   public static BagItemMenu leatherBag(int containerId, Inventory inventory, Container container) {
+      return new BagItemMenu(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, container, BagOfHolding.CONFIG.server().leatherBagRows);
    }
 
-   public static BagItemMenu threeRows(int containerId, Inventory inventory, Container container) {
-      return new BagItemMenu(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, container, 3);
+   public static BagItemMenu ironBag(int containerId, Inventory inventory, Container container) {
+      return new BagItemMenu(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, container, BagOfHolding.CONFIG.server().ironBagRows);
    }
 
-   public static BagItemMenu sixRows(int containerId, Inventory inventory, Container container) {
-      return new BagItemMenu(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, container, 6);
+   public static BagItemMenu goldenBag(int containerId, Inventory inventory, Container container) {
+      return new BagItemMenu(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.get(), containerId, inventory, container, BagOfHolding.CONFIG.server().goldenBagRows);
    }
 
    private BagItemMenu(MenuType<?> menuType, int containerId, Inventory inventory, int containerRows) {
@@ -59,9 +61,11 @@ public class BagItemMenu extends AbstractContainerMenu {
          }
       }
       for(int i1 = 0; i1 < 9; ++i1) {
-         this.addSlot(new LockableInventorySlot(inventory, i1, 8 + i1 * 18, 161 + i));
+         Slot hotbarSlot = this.addSlot(new LockableInventorySlot(inventory, i1, 8 + i1 * 18, 161 + i));
+         if (i1 == 0) {
+            this.hotbarStartIndex = hotbarSlot.index;
+         }
       }
-
    }
 
    @Override
@@ -104,8 +108,12 @@ public class BagItemMenu extends AbstractContainerMenu {
       return this.containerRows;
    }
 
+   public int getHotbarStartIndex() {
+      return this.hotbarStartIndex;
+   }
+
    @FunctionalInterface
-   public interface BagOfHoldingMenuFactory {
+   public interface Factory {
       BagItemMenu create(int containerId, Inventory inventory, Container container);
    }
 }
