@@ -18,7 +18,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> p_176532_) {
-        // just manually change type to lootpouches:crafting_special_bag_of_holding_upgrade, so we don't have to copy serializer
+        // just manually change type to bagofholding:crafting_special_bag_upgrade, so we don't have to copy serializer
         ShapedRecipeBuilder.shaped(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.get())
                 .define('C', Blocks.CHEST)
                 .define('S', Items.STRING)
@@ -33,8 +33,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('C', ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.get())
                 .define('S', Items.STRING)
                 .define('I', Items.IRON_INGOT)
+                .define('G', Items.DIAMOND)
                 .define('W', ItemTags.WOOL)
-                .pattern("SIS")
+                .pattern("SGS")
                 .pattern("ICI")
                 .pattern("WIW")
                 .unlockedBy("has_leather_bag_of_holding", has(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.get()))
@@ -43,8 +44,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('C', ModRegistry.IRON_BAG_OF_HOLDING_ITEM.get())
                 .define('S', Items.STRING)
                 .define('I', Items.GOLD_INGOT)
+                .define('G', Items.AMETHYST_SHARD)
                 .define('W', ItemTags.WOOL)
-                .pattern("SIS")
+                .pattern("SGS")
                 .pattern("ICI")
                 .pattern("WIW")
                 .unlockedBy("has_iron_bag_of_holding", has(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.get()))

@@ -1,7 +1,7 @@
 {
   "type": "bagofholding:crafting_special_bag_upgrade",
   "pattern": [
-    "SIS",
+    "SGS",
     "ICI",
     "WIW"
   ],
@@ -14,6 +14,9 @@
     },
     "I": {
       "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:diamond"
     },
     "W": {
       "tag": "minecraft:wool"

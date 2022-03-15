@@ -19,6 +19,6 @@ public class ModLanguageProvider extends LanguageProvider {
         this.add("item.container.tooltip.shift", "Shift");
         this.add("tutorial.container.itemInsert.title", "Use a %s");
         this.add("tutorial.container.bag_of_holding.name", "Bag of Holding");
-        this.add("enchantment.bag_of_holding.preservation.desc", "Prevents a bag of holding from being lost on death. The enchantment level is reduced by one each time.");
+        this.add("enchantment.bagofholding.preservation.desc", "Prevents a bag of holding from being lost on death. The enchantment level is reduced by one each time.");
     }
 }

@@ -36,8 +36,12 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     }
 
     @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return stack.getCount() == 1;
+    }
+
+    @Override
     public int getEnchantmentValue() {
-        // required to be able to apply perseverance enchantment on enchanting tables
         return 1;
     }
 

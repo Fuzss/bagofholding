@@ -23,11 +23,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Locale;
+
 public class ModRegistry {
     private static final RegistryManager REGISTRY = RegistryManager.of(BagOfHolding.MOD_ID);
-    public static final RegistryObject<Item> LEATHER_BAG_OF_HOLDING_ITEM = REGISTRY.registerItem("leather_bag_of_holding", () -> new BagOfHoldingItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS), () -> BagOfHolding.CONFIG.server().leatherBagRows, DyeColor.BROWN, BagItemMenu::leatherBag));
-    public static final RegistryObject<Item> IRON_BAG_OF_HOLDING_ITEM = REGISTRY.registerItem("iron_bag_of_holding", () -> new BagOfHoldingItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS), () -> BagOfHolding.CONFIG.server().ironBagRows, DyeColor.WHITE, BagItemMenu::ironBag));
-    public static final RegistryObject<Item> GOLDEN_BAG_OF_HOLDING_ITEM = REGISTRY.registerItem("golden_bag_of_holding", () -> new BagOfHoldingItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS), () -> BagOfHolding.CONFIG.server().goldenBagRows, DyeColor.YELLOW, BagItemMenu::goldenBag));
+    public static final RegistryObject<Item> LEATHER_BAG_OF_HOLDING_ITEM = REGISTRY.registerItem("leather_bag_of_holding", () -> new BagOfHoldingItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1), () -> BagOfHolding.CONFIG.server().leatherBagRows, DyeColor.BROWN, BagItemMenu::leatherBag));
+    public static final RegistryObject<Item> IRON_BAG_OF_HOLDING_ITEM = REGISTRY.registerItem("iron_bag_of_holding", () -> new BagOfHoldingItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1), () -> BagOfHolding.CONFIG.server().ironBagRows, DyeColor.WHITE, BagItemMenu::ironBag));
+    public static final RegistryObject<Item> GOLDEN_BAG_OF_HOLDING_ITEM = REGISTRY.registerItem("golden_bag_of_holding", () -> new BagOfHoldingItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1), () -> BagOfHolding.CONFIG.server().goldenBagRows, DyeColor.YELLOW, BagItemMenu::goldenBag));
     public static final RegistryObject<MenuType<BagItemMenu>> LEATHER_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerRawMenuType("leather_bag_of_holding", () -> BagItemMenu::leatherBag);
     public static final RegistryObject<MenuType<BagItemMenu>> IRON_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerRawMenuType("iron_bag_of_holding", () -> BagItemMenu::ironBag);
     public static final RegistryObject<MenuType<BagItemMenu>> GOLDEN_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerRawMenuType("golden_bag_of_holding", () -> BagItemMenu::goldenBag);
@@ -37,7 +39,7 @@ public class ModRegistry {
     private static final CapabilityController CAPABILITIES = CapabilityController.of(BagOfHolding.MOD_ID);
     public static final Capability<BagPerseveranceCapability> BAG_PERSEVERANCE_CAPABILITY = CAPABILITIES.registerPlayerCapability("bag_perseverance", BagPerseveranceCapability.class, player -> new BagPerseveranceCapabilityImpl(), PlayerRespawnStrategy.NEVER, new CapabilityToken<BagPerseveranceCapability>() {});
 
-    public static final EnchantmentCategory BAG_OF_HOLDING_ENCHANTMENT_CATEGORY = EnchantmentCategory.create("BAG_OF_HOLDING", item -> item instanceof BagOfHoldingItem);
+    public static final EnchantmentCategory BAG_OF_HOLDING_ENCHANTMENT_CATEGORY = EnchantmentCategory.create(BagOfHolding.MOD_ID.toUpperCase(Locale.ROOT).concat("_BAG_OF_HOLDING"), item -> item instanceof BagOfHoldingItem);
 
     public static void touch() {
 
