@@ -46,14 +46,14 @@ public class BagUpgradeRecipe extends ShapedRecipe {
         public ShapedRecipe fromJson(ResourceLocation p_44236_, JsonObject p_44237_) {
             ShapedRecipe recipe = super.fromJson(p_44236_, p_44237_);
             if (recipe == null) return null;
-            return new BagUpgradeRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), recipe.getIngredients(), recipe.getResultItem());
+            return new BagUpgradeRecipe(recipe.getId(), recipe.getGroup(), recipe.getWidth(), recipe.getHeight(), recipe.getIngredients(), recipe.getResultItem());
         }
 
         @Override
         public ShapedRecipe fromNetwork(ResourceLocation p_44239_, FriendlyByteBuf p_44240_) {
             ShapedRecipe recipe = super.fromNetwork(p_44239_, p_44240_);
             if (recipe == null) return null;
-            return new BagUpgradeRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), recipe.getIngredients(), recipe.getResultItem());
+            return new BagUpgradeRecipe(recipe.getId(), recipe.getGroup(), recipe.getWidth(), recipe.getHeight(), recipe.getIngredients(), recipe.getResultItem());
         }
     }
 }
