@@ -2,7 +2,7 @@ package fuzs.bagofholding;
 
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
-import fuzs.bagofholding.network.message.S2CLockSlotMessage;
+import fuzs.bagofholding.network.S2CLockSlotMessage;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.puzzleslib.config.ConfigHolder;
 import fuzs.puzzleslib.core.CoreServices;

@@ -1,8 +1,8 @@
-package fuzs.bagofholding.network.message;
+package fuzs.bagofholding.network;
 
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
-import fuzs.puzzleslib.network.message.Message;
+import fuzs.puzzleslib.network.Message;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
@@ -11,6 +11,7 @@ public class S2CLockSlotMessage implements Message<S2CLockSlotMessage> {
     private int slotId;
 
     public S2CLockSlotMessage() {
+
     }
 
     public S2CLockSlotMessage(int containerId, int slotId) {
@@ -31,16 +32,15 @@ public class S2CLockSlotMessage implements Message<S2CLockSlotMessage> {
     }
 
     @Override
-    public PacketHandler<S2CLockSlotMessage> makeHandler() {
-        return new LockSlotHandler();
-    }
+    public MessageHandler<S2CLockSlotMessage> makeHandler() {
+        return new MessageHandler<>() {
 
-    private static class LockSlotHandler extends PacketHandler<S2CLockSlotMessage> {
-        @Override
-        public void handle(S2CLockSlotMessage packet, Player player, Object gameInstance) {
-            if (player.containerMenu.containerId == packet.containerId && player.containerMenu instanceof BagItemMenu menu) {
-                ((LockableInventorySlot) menu.getSlot(packet.slotId)).lock();
+            @Override
+            public void handle(S2CLockSlotMessage message, Player player, Object gameInstance) {
+                if (player.containerMenu.containerId == message.containerId && player.containerMenu instanceof BagItemMenu menu) {
+                    ((LockableInventorySlot) menu.getSlot(message.slotId)).lock();
+                }
             }
-        }
+        };
     }
 }

@@ -2,6 +2,7 @@ package fuzs.bagofholding.init;
 
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.capability.BagPerseveranceCapability;
+import fuzs.bagofholding.capability.BagPerseveranceCapabilityImpl;
 import fuzs.bagofholding.core.ModServices;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.item.BagOfHoldingItem;
@@ -9,6 +10,7 @@ import fuzs.bagofholding.world.item.crafting.BagUpgradeRecipe;
 import fuzs.bagofholding.world.item.enchantment.PreservationEnchantment;
 import fuzs.puzzleslib.capability.CapabilityController;
 import fuzs.puzzleslib.capability.data.CapabilityKey;
+import fuzs.puzzleslib.capability.data.PlayerRespawnStrategy;
 import fuzs.puzzleslib.core.CoreServices;
 import fuzs.puzzleslib.init.RegistryManager;
 import fuzs.puzzleslib.init.RegistryReference;
@@ -36,7 +38,8 @@ public class ModRegistry {
     public static final RegistryReference<Enchantment> PRESERVATION_ENCHANTMENT = REGISTRY.registerEnchantment("preservation", () -> new PreservationEnchantment(Enchantment.Rarity.UNCOMMON, EquipmentSlot.values()));
     public static final RegistryReference<RecipeSerializer<ShapedRecipe>> BAG_UPGRADE_RECIPE_SERIALIZER = REGISTRY.register(Registry.RECIPE_SERIALIZER_REGISTRY, "crafting_special_bag_upgrade", () -> new BagUpgradeRecipe.Serializer());
 
-    public static final CapabilityKey<BagPerseveranceCapability> BAG_PERSEVERANCE_CAPABILITY = CapabilityController.makeCapabilityKey(BagOfHolding.MOD_ID,"bag_perseverance", BagPerseveranceCapability.class);
+    private static final CapabilityController CAPABILITIES = CoreServices.FACTORIES.capabilities(BagOfHolding.MOD_ID);
+    public static final CapabilityKey<BagPerseveranceCapability> BAG_PERSEVERANCE_CAPABILITY = CAPABILITIES.registerPlayerCapability("bag_perseverance", BagPerseveranceCapability.class, player -> new BagPerseveranceCapabilityImpl(), PlayerRespawnStrategy.NEVER);
 
     public static void touch() {
 

@@ -2,7 +2,7 @@ package fuzs.bagofholding.world.item;
 
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.config.ServerConfig;
-import fuzs.bagofholding.network.message.S2CLockSlotMessage;
+import fuzs.bagofholding.network.S2CLockSlotMessage;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import net.minecraft.core.NonNullList;

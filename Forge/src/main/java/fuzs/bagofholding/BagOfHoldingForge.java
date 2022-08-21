@@ -1,13 +1,16 @@
 package fuzs.bagofholding;
 
+import fuzs.bagofholding.capability.BagPerseveranceCapability;
 import fuzs.bagofholding.data.ModLanguageProvider;
 import fuzs.bagofholding.data.ModRecipeProvider;
 import fuzs.bagofholding.init.ForgeModRegistry;
 import fuzs.bagofholding.init.ModRegistry;
+import fuzs.puzzleslib.capability.ForgeCapabilityController;
 import fuzs.puzzleslib.core.CoreServices;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -23,7 +26,12 @@ public class BagOfHoldingForge {
     public static void onConstructMod(final FMLConstructModEvent evt) {
         CoreServices.FACTORIES.modConstructor(BagOfHolding.MOD_ID).accept(new BagOfHolding());
         ForgeModRegistry.touch();
+        registerCapabilities();
         registerHandlers();
+    }
+
+    private static void registerCapabilities() {
+        ForgeCapabilityController.setCapabilityToken(ModRegistry.BAG_PERSEVERANCE_CAPABILITY, new CapabilityToken<BagPerseveranceCapability>() {});
     }
 
     private static void registerHandlers() {
