@@ -1,7 +1,7 @@
 package fuzs.bagofholding.client.core;
 
-import fuzs.puzzleslib.core.CoreServices;
+import fuzs.puzzleslib.util.PuzzlesUtil;
 
-public class ModClientServices extends CoreServices {
-    public static final ClientAbstractions CLIENT_ABSTRACTIONS = load(ClientAbstractions.class);
+public class ModClientServices {
+    public static final ClientAbstractions CLIENT_ABSTRACTIONS = PuzzlesUtil.loadServiceProvider(ClientAbstractions.class);
 }
