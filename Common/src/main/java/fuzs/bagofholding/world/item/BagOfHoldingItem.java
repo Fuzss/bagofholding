@@ -116,9 +116,12 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     public static boolean mayPlaceInBag(ItemStack stack) {
         Item item = stack.getItem();
+        if (!BagOfHolding.CONFIG.get(ServerConfig.class).bagWhitelist.isEmpty()) {
+            return BagOfHolding.CONFIG.get(ServerConfig.class).bagWhitelist.contains(item);
+        }
         if (!item.canFitInsideContainerItems()) {
             return false;
         }
-        return !BagOfHolding.CONFIG.get(ServerConfig.class).bagBlacklist.contains(stack.getItem());
+        return !BagOfHolding.CONFIG.get(ServerConfig.class).bagBlacklist.contains(item);
     }
 }

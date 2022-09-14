@@ -2,12 +2,11 @@ package fuzs.bagofholding.config;
 
 import fuzs.puzzleslib.config.ConfigCore;
 import fuzs.puzzleslib.config.annotation.Config;
-import fuzs.puzzleslib.config.serialization.EntryCollectionBuilder;
+import fuzs.puzzleslib.config.serialization.ConfigDataSet;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
-import java.util.Set;
 
 public class ServerConfig implements ConfigCore {
     @Config(description = "Amount of inventory rows a leather bag of holding has.")
@@ -22,13 +21,17 @@ public class ServerConfig implements ConfigCore {
     @Config(name = "preservation_level_loss_chance", description = "Chance that one level of preservation will be lost on a bag of holding when dying.")
     @Config.DoubleRange(min = 0.0, max = 1.0)
     public double enchLevelLossChance = 1.0;
-    @Config(name = "bag_of_holding_blacklist", description = {"Items that should not be allowed to be put into a bag, mainly intended to prevent nesting with backpacks from other mods.", "Shulker boxes and other bags of holding are disabled by default.", EntryCollectionBuilder.CONFIG_DESCRIPTION})
-    List<String> bagBlacklistRaw = EntryCollectionBuilder.getKeyList(Registry.ITEM_REGISTRY);
+    @Config(name = "bag_of_holding_blacklist", description = {"Items that should not be allowed in a bag, mainly intended to prevent nesting with backpacks from other mods.", "Shulker boxes and other bags of holding are disabled by default.", ConfigDataSet.CONFIG_DESCRIPTION})
+    List<String> bagBlacklistRaw = ConfigDataSet.toString(Registry.ITEM_REGISTRY);
+    @Config(name = "bag_of_holding_whitelist", description = {"Only items in this list will be allowed in a bag. Must contain at least a single entry to be valid. Overrides blacklist when valid.", ConfigDataSet.CONFIG_DESCRIPTION})
+    List<String> bagWhitelistRaw = ConfigDataSet.toString(Registry.ITEM_REGISTRY);
 
-    public Set<Item> bagBlacklist;
+    public ConfigDataSet<Item> bagBlacklist;
+    public ConfigDataSet<Item> bagWhitelist;
 
     @Override
     public void afterConfigReload() {
-        this.bagBlacklist = EntryCollectionBuilder.of(Registry.ITEM_REGISTRY).buildSet(this.bagBlacklistRaw);
+        this.bagBlacklist = ConfigDataSet.of(Registry.ITEM_REGISTRY, this.bagBlacklistRaw);
+        this.bagWhitelist = ConfigDataSet.of(Registry.ITEM_REGISTRY, this.bagWhitelistRaw);
     }
 }
