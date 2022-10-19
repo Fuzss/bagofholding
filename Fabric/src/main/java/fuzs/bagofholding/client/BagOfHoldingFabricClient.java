@@ -15,7 +15,6 @@ public class BagOfHoldingFabricClient implements ClientModInitializer {
     }
 
     private static void registerHandlers() {
-        SlotOverlayHandler slotOverlayHandler = new SlotOverlayHandler();
-        ContainerScreenEvents.FOREGROUND.register(slotOverlayHandler::onDrawForeground);
+        ContainerScreenEvents.FOREGROUND.register(SlotOverlayHandler::onDrawForeground);
     }
 }

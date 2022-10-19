@@ -1,6 +1,7 @@
 package fuzs.bagofholding.world.item;
 
 import fuzs.bagofholding.BagOfHolding;
+import fuzs.bagofholding.api.world.item.ContainerItemHelper;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.network.S2CLockSlotMessage;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
@@ -25,7 +26,7 @@ import java.util.function.IntSupplier;
 import java.util.stream.Stream;
 
 public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreTag {
-    private final IntSupplier containerRows;
+    public final IntSupplier containerRows;
     private final DyeColor backgroundColor;
     private final BagItemMenu.Factory menuFactory;
 
@@ -53,12 +54,12 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickAction, Player player) {
-        return ContainerItemHelper.overrideStackedOnOther(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt(), slot, clickAction, player, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
+        return ContainerItemHelper.overrideStackedOnOther(stack, null, this.containerRows.getAsInt(), slot, clickAction, player, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack stackOnMe, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
-        return ContainerItemHelper.overrideOtherStackedOnMe(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt(), stackOnMe, slot, clickAction, player, slotAccess, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
+        return ContainerItemHelper.overrideOtherStackedOnMe(stack, null, this.containerRows.getAsInt(), stackOnMe, slot, clickAction, player, slotAccess, BagOfHoldingItem::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     private MenuProvider getMenuProvider(ItemStack stack) {
         return new SimpleMenuProvider((containerId, inventory, player) -> {
-            SimpleContainer container = ContainerItemHelper.loadItemContainer(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt());
+            SimpleContainer container = ContainerItemHelper.loadItemContainer(stack, null, this.containerRows.getAsInt());
             return this.menuFactory.create(containerId, inventory, container);
         }, stack.getHoverName());
     }
@@ -94,13 +95,13 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        return ContainerItemHelper.getTooltipImage(stack.getTag(), stack::getOrCreateTag, this.containerRows.getAsInt(), this.backgroundColor);
+        return ContainerItemHelper.getTooltipImage(stack, null, this.containerRows.getAsInt(), this.backgroundColor);
     }
 
     @Override
     public void onDestroyed(ItemEntity itemEntity) {
         Stream.Builder<ItemStack> builder = Stream.builder();
-        SimpleContainer container = ContainerItemHelper.loadItemContainer(itemEntity.getItem().getTag(), itemEntity.getItem()::getOrCreateTag, this.containerRows.getAsInt());
+        SimpleContainer container = ContainerItemHelper.loadItemContainer(itemEntity.getItem(), null, this.containerRows.getAsInt());
         for (int i = 0; i < container.getContainerSize(); i++) {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {

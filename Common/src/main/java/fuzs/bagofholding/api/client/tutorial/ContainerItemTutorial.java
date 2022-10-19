@@ -1,4 +1,4 @@
-package fuzs.bagofholding.client.tutorial;
+package fuzs.bagofholding.api.client.tutorial;
 
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.toasts.TutorialToast;

@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v4.1.3-1.19.2] - 2022-10-19
+### Added
+- Added a `+` indicator that is shown on bags when the stack carried by the cursor can be added to them in your inventory
+- Added translation for `zh_cn` by radical233, thanks!
+
 ## [v4.1.2-1.19.2] - 2022-09-14
 ### Added
 - Added a whitelist for items allowed in bags, no other items will be permitted in bags when the whitelist has at least one entry

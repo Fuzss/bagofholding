@@ -18,7 +18,7 @@ public abstract class PlayerMixin extends LivingEntity {
     }
 
     @Inject(method = "dropEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;dropEquipment()V", shift = At.Shift.AFTER))
-    protected void dropEquipment(CallbackInfo callbackInfo) {
+    protected void bagofholding$dropEquipment(CallbackInfo callback) {
         // on Forge using LivingDropsEvent would work, requires a different implementation though
         // just do it like this since the event is hard to replicate on Fabric anyway due to the whole capturing of drops Forge does
         ModRegistry.BAG_PERSEVERANCE_CAPABILITY.maybeGet(this).ifPresent(capability -> capability.saveOnDeath((Player) (Object) this));

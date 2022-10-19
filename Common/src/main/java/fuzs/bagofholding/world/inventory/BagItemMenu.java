@@ -1,6 +1,7 @@
 package fuzs.bagofholding.world.inventory;
 
 import fuzs.bagofholding.BagOfHolding;
+import fuzs.bagofholding.api.world.inventory.SimpleContainerWithSlots;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.init.ModRegistry;
 import net.minecraft.world.Container;

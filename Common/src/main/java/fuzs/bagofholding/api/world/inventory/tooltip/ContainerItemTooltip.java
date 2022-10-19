@@ -1,4 +1,4 @@
-package fuzs.bagofholding.world.inventory.tooltip;
+package fuzs.bagofholding.api.world.inventory.tooltip;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;

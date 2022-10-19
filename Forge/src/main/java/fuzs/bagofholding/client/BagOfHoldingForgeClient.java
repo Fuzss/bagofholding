@@ -20,9 +20,8 @@ public class BagOfHoldingForgeClient {
     }
 
     private static void registerHandlers() {
-        SlotOverlayHandler slotOverlayHandler = new SlotOverlayHandler();
         MinecraftForge.EVENT_BUS.addListener((final ContainerScreenEvent.Render.Foreground evt) -> {
-            slotOverlayHandler.onDrawForeground(evt.getContainerScreen(), evt.getPoseStack(), evt.getMouseX(), evt.getMouseY());
+            SlotOverlayHandler.onDrawForeground(evt.getContainerScreen(), evt.getPoseStack(), evt.getMouseX(), evt.getMouseY());
         });
     }
 }

@@ -18,12 +18,12 @@ public abstract class AbstractContainerScreenMixin extends Screen {
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;renderBg(Lcom/mojang/blaze3d/vertex/PoseStack;FII)V", shift = At.Shift.AFTER))
-    public void render$invoke$renderBg(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo callback) {
+    public void bagofholding$render$0(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo callback) {
         ContainerScreenEvents.BACKGROUND.invoker().onDrawBackground((AbstractContainerScreen<?>) (Object) this, poseStack, mouseX, mouseY);
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;renderLabels(Lcom/mojang/blaze3d/vertex/PoseStack;II)V", shift = At.Shift.AFTER))
-    public void render$invoke$renderLabels(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo callback) {
+    public void bagofholding$render$1(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo callback) {
         ContainerScreenEvents.FOREGROUND.invoker().onDrawForeground((AbstractContainerScreen<?>) (Object) this, poseStack, mouseX, mouseY);
     }
 }
