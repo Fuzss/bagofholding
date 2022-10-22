@@ -6,7 +6,7 @@ import com.mojang.math.Matrix4f;
 import fuzs.bagofholding.api.client.handler.MouseScrollHandler;
 import fuzs.bagofholding.api.config.ClientConfigCore;
 import fuzs.bagofholding.api.world.inventory.tooltip.ContainerItemTooltip;
-import fuzs.bagofholding.api.world.item.ContainerSlotHelper;
+import fuzs.bagofholding.api.world.item.container.ContainerSlotHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

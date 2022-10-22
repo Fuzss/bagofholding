@@ -4,8 +4,8 @@ import fuzs.bagofholding.api.SimpleInventoryContainersApi;
 import fuzs.bagofholding.api.config.ClientConfigCore;
 import fuzs.bagofholding.api.config.ServerConfigCore;
 import fuzs.bagofholding.api.network.C2SCurrentSlotMessage;
-import fuzs.bagofholding.api.world.item.ContainerSlotHelper;
-import fuzs.bagofholding.world.item.BagOfHoldingItem;
+import fuzs.bagofholding.api.world.item.container.ContainerItemProvider;
+import fuzs.bagofholding.api.world.item.container.ContainerSlotHelper;
 import fuzs.puzzleslib.client.gui.screens.CommonScreens;
 import fuzs.puzzleslib.proxy.Proxy;
 import net.minecraft.client.Minecraft;
@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.util.Unit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -26,15 +27,18 @@ public class MouseScrollHandler {
         if (!serverConfig.allowSlotCycling()) return Optional.empty();
         if (showInventoryContents(clientConfig) && screen instanceof AbstractContainerScreen<?> containerScreen) {
             Slot hoveredSlot = CommonScreens.INSTANCE.getHoveredSlot(containerScreen);
-            if (hoveredSlot != null && hoveredSlot.getItem().getItem() instanceof BagOfHoldingItem bagOfHoldingItem) {
-                int signum = (int) Math.signum(verticalAmount);
-                if (signum != 0) {
-                    Player player = CommonScreens.INSTANCE.getMinecraft(screen).player;
-                    int currentContainerSlot = ContainerSlotHelper.getCurrentContainerSlot(player);
-                    currentContainerSlot = ContainerSlotHelper.findClosestSlotWithContent(hoveredSlot.getItem(), bagOfHoldingItem.containerRows.getAsInt(), currentContainerSlot, signum > 0);
-                    ContainerSlotHelper.setCurrentContainerSlot(player, currentContainerSlot);
+            if (hoveredSlot != null) {
+                ItemStack stack = hoveredSlot.getItem();
+                if (ContainerItemProvider.suppliesContainerProvider(stack)) {
+                    int signum = (int) Math.signum(verticalAmount);
+                    if (signum != 0) {
+                        Player player = CommonScreens.INSTANCE.getMinecraft(screen).player;
+                        int currentContainerSlot = ContainerSlotHelper.getCurrentContainerSlot(player);
+                        currentContainerSlot = ContainerSlotHelper.findClosestSlotWithContent(ContainerItemProvider.get(stack.getItem()).getItemContainer(player, stack).get(), currentContainerSlot, signum > 0);
+                        ContainerSlotHelper.setCurrentContainerSlot(player, currentContainerSlot);
+                    }
+                    return Optional.of(Unit.INSTANCE);
                 }
-                return Optional.of(Unit.INSTANCE);
             }
         }
         return Optional.empty();
@@ -52,7 +56,7 @@ public class MouseScrollHandler {
     private static Optional<Slot> getHoveredSlotWithContainerItem(@Nullable Screen screen, ClientConfigCore clientConfig) {
         if (showInventoryContents(clientConfig) && screen instanceof AbstractContainerScreen<?> containerScreen) {
             Slot hoveredSlot = CommonScreens.INSTANCE.getHoveredSlot(containerScreen);
-            if (hoveredSlot != null && hoveredSlot.getItem().getItem() instanceof BagOfHoldingItem) {
+            if (hoveredSlot != null && ContainerItemProvider.suppliesContainerProvider(hoveredSlot.getItem())) {
                 return Optional.of(hoveredSlot);
             }
         }

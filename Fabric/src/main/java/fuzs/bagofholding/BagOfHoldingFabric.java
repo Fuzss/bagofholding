@@ -12,9 +12,9 @@ public class BagOfHoldingFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        FabricModRegistry.touch();
         CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new SimpleInventoryContainersApi());
         CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new BagOfHolding());
-        FabricModRegistry.touch();
         registerHandlers();
     }
 

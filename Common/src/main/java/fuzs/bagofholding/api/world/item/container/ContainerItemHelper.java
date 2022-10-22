@@ -1,4 +1,4 @@
-package fuzs.bagofholding.api.world.item;
+package fuzs.bagofholding.api.world.item.container;
 
 import fuzs.bagofholding.api.world.inventory.SimpleContainerWithSlots;
 import fuzs.bagofholding.api.world.inventory.tooltip.ContainerItemTooltip;

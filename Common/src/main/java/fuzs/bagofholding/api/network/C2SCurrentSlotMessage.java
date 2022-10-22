@@ -1,7 +1,7 @@
 package fuzs.bagofholding.api.network;
 
-import fuzs.bagofholding.BagOfHolding;
-import fuzs.bagofholding.api.world.item.ContainerSlotHelper;
+import fuzs.bagofholding.api.SimpleInventoryContainersApi;
+import fuzs.bagofholding.api.world.item.container.ContainerSlotHelper;
 import fuzs.puzzleslib.network.Message;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -36,13 +36,13 @@ public class C2SCurrentSlotMessage implements Message<C2SCurrentSlotMessage> {
             public void handle(C2SCurrentSlotMessage message, Player player, Object gameInstance) {
                 AbstractContainerMenu containerMenu = player.containerMenu;
                 if (!containerMenu.stillValid(player)) {
-                    BagOfHolding.LOGGER.debug("Player {} interacted with invalid menu {}", player, containerMenu);
+                    SimpleInventoryContainersApi.LOGGER.debug("Player {} interacted with invalid menu {}", player, containerMenu);
                     return;
                 }
                 if (message.currentSlot >= -1) {
                     ContainerSlotHelper.setCurrentContainerSlot(player, message.currentSlot);
                 } else {
-                    BagOfHolding.LOGGER.warn("{} tried to set an invalid current container item slot", player);
+                    SimpleInventoryContainersApi.LOGGER.warn("{} tried to set an invalid current container item slot", player);
                 }
             }
         };

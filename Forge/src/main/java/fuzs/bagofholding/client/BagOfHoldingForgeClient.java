@@ -6,12 +6,10 @@ import fuzs.bagofholding.client.handler.SlotOverlayHandler;
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.puzzleslib.client.core.ClientFactories;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ContainerScreenEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -32,8 +30,8 @@ public class BagOfHoldingForgeClient {
         MinecraftForge.EVENT_BUS.addListener((final ScreenEvent.MouseScrolled.Pre evt) -> {
             MouseScrollHandler.onMouseScroll(evt.getScreen(), evt.getMouseX(), evt.getMouseY(), evt.getScrollDelta(), evt.getScrollDelta(), BagOfHolding.CONFIG.get(ClientConfig.class), BagOfHolding.CONFIG.get(ServerConfig.class)).ifPresent(unit -> evt.setCanceled(true));
         });
-        MinecraftForge.EVENT_BUS.addListener((final TickEvent.ClientTickEvent evt) -> {
-            if (evt.phase == TickEvent.Phase.END) MouseScrollHandler.onClientTick$End(Minecraft.getInstance(), BagOfHolding.CONFIG.get(ClientConfig.class));
-        });
+//        MinecraftForge.EVENT_BUS.addListener((final TickEvent.ClientTickEvent evt) -> {
+//            if (evt.phase == TickEvent.Phase.END) MouseScrollHandler.onClientTick$End(Minecraft.getInstance(), BagOfHolding.CONFIG.get(ClientConfig.class));
+//        });
     }
 }

@@ -8,7 +8,6 @@ import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.puzzleslib.client.core.ClientFactories;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -30,6 +29,6 @@ public class BagOfHoldingFabricClient implements ClientModInitializer {
                 });
             }
         });
-        ClientTickEvents.END_CLIENT_TICK.register(minecraft -> MouseScrollHandler.onClientTick$End(minecraft, BagOfHolding.CONFIG.get(ClientConfig.class)));
+//        ClientTickEvents.END_CLIENT_TICK.register(minecraft -> MouseScrollHandler.onClientTick$End(minecraft, BagOfHolding.CONFIG.get(ClientConfig.class)));
     }
 }

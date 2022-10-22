@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v4.1.4-1.19.2] - 2022-10-22
+### Added
+- Added an alternative overlay for the next item to be taken from a bag on right-clicking (available in the config)
+### Changed
+- When extracting an item from a bag in an inventory menu via right-clicking the last item is no longer the one taken out first. Instead, use the scroll wheel to choose which item you want to take from the bag.
+- White- and blacklists are now controllable per bag type
+
 ## [v4.1.3-1.19.2] - 2022-10-19
 ### Added
 - Added a `+` indicator that is shown on bags when the stack carried by the cursor can be added to them in your inventory

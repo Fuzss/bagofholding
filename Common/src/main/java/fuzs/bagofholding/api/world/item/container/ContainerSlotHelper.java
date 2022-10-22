@@ -1,24 +1,11 @@
-package fuzs.bagofholding.api.world.item;
+package fuzs.bagofholding.api.world.item.container;
 
 import fuzs.bagofholding.api.capability.ContainerSlotCapability;
 import fuzs.bagofholding.api.init.ModRegistry;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 public class ContainerSlotHelper {
-
-    public static int verifyCurrentContainerSlot(ItemStack stack, int containerRows, int currentContainerSlot) {
-        SimpleContainer container = ContainerItemHelper.loadItemContainer(stack, null, containerRows, false);
-        if (currentContainerSlot == -1) currentContainerSlot = container.getContainerSize() - 1;
-        if (!container.getItem(currentContainerSlot).isEmpty()) return currentContainerSlot;
-        return findClosestSlotWithContent(stack, containerRows, currentContainerSlot, false);
-    }
-
-    public static int findClosestSlotWithContent(ItemStack stack, int containerRows, int currentContainerSlot, boolean forwards) {
-        SimpleContainer container = ContainerItemHelper.loadItemContainer(stack, null, containerRows, false);
-        return findClosestSlotWithContent(container, currentContainerSlot, forwards);
-    }
 
     public static int findClosestSlotWithContent(SimpleContainer container, int currentContainerSlot, boolean forwards) {
         int size = container.getContainerSize();

@@ -11,8 +11,8 @@ import java.util.function.IntSupplier;
 
 public class FabricBagOfHoldingItem extends BagOfHoldingItem implements FabricItem {
 
-    public FabricBagOfHoldingItem(Properties p_41383_, IntSupplier containerRows, DyeColor backgroundColor, BagItemMenu.Factory menuFactory) {
-        super(p_41383_, containerRows, backgroundColor, menuFactory);
+    public FabricBagOfHoldingItem(Properties properties, Type type) {
+        super(properties, type);
     }
 
     @Override

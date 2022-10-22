@@ -26,9 +26,9 @@ public class BagOfHoldingForge {
 
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
+        ForgeModRegistry.touch();
         CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new SimpleInventoryContainersApi());
         CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new BagOfHolding());
-        ForgeModRegistry.touch();
         registerCapabilities();
         registerHandlers();
     }

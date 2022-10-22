@@ -1,8 +1,6 @@
 package fuzs.bagofholding.init;
 
 import fuzs.bagofholding.BagOfHolding;
-import fuzs.bagofholding.api.capability.ContainerSlotCapability;
-import fuzs.bagofholding.api.capability.ContainerSlotCapabilityImpl;
 import fuzs.bagofholding.capability.BagPerseveranceCapability;
 import fuzs.bagofholding.capability.BagPerseveranceCapabilityImpl;
 import fuzs.bagofholding.core.ModServices;
@@ -34,9 +32,9 @@ public class ModRegistry {
     public static final RegistryReference<Item> LEATHER_BAG_OF_HOLDING_ITEM = REGISTRY.placeholder(Registry.ITEM_REGISTRY, "leather_bag_of_holding");
     public static final RegistryReference<Item> IRON_BAG_OF_HOLDING_ITEM = REGISTRY.placeholder(Registry.ITEM_REGISTRY, "iron_bag_of_holding");
     public static final RegistryReference<Item> GOLDEN_BAG_OF_HOLDING_ITEM = REGISTRY.placeholder(Registry.ITEM_REGISTRY, "golden_bag_of_holding");
-    public static final RegistryReference<MenuType<BagItemMenu>> LEATHER_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerMenuTypeSupplier("leather_bag_of_holding", () -> BagItemMenu::leatherBag);
-    public static final RegistryReference<MenuType<BagItemMenu>> IRON_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerMenuTypeSupplier("iron_bag_of_holding", () -> BagItemMenu::ironBag);
-    public static final RegistryReference<MenuType<BagItemMenu>> GOLDEN_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerMenuTypeSupplier("golden_bag_of_holding", () -> BagItemMenu::goldenBag);
+    public static final RegistryReference<MenuType<BagItemMenu>> LEATHER_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerMenuTypeSupplier("leather_bag_of_holding", () -> BagItemMenu.create(BagOfHoldingItem.Type.LEATHER));
+    public static final RegistryReference<MenuType<BagItemMenu>> IRON_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerMenuTypeSupplier("iron_bag_of_holding", () -> BagItemMenu.create(BagOfHoldingItem.Type.IRON));
+    public static final RegistryReference<MenuType<BagItemMenu>> GOLDEN_BAG_OF_HOLDING_MENU_TYPE = REGISTRY.registerMenuTypeSupplier("golden_bag_of_holding", () -> BagItemMenu.create(BagOfHoldingItem.Type.GOLDEN));
     public static final RegistryReference<Enchantment> PRESERVATION_ENCHANTMENT = REGISTRY.registerEnchantment("preservation", () -> new PreservationEnchantment(Enchantment.Rarity.UNCOMMON, EquipmentSlot.values()));
     public static final RegistryReference<RecipeSerializer<ShapedRecipe>> BAG_UPGRADE_RECIPE_SERIALIZER = REGISTRY.register(Registry.RECIPE_SERIALIZER_REGISTRY, "crafting_special_bag_upgrade", () -> new BagUpgradeRecipe.Serializer());
 

@@ -8,6 +8,8 @@ public interface ClientConfigCore {
 
     SlotOverlay slotOverlay();
 
+    boolean containerItemIndicator();
+
     enum SlotOverlay {
         NONE, HOTBAR, HOVER
     }

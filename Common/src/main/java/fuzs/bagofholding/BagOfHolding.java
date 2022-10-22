@@ -1,15 +1,19 @@
 package fuzs.bagofholding;
 
+import fuzs.bagofholding.api.world.item.container.ContainerItemProvider;
+import fuzs.bagofholding.api.world.item.container.ContainerItemHelper;
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.init.ModRegistry;
-import fuzs.bagofholding.api.network.C2SCurrentSlotMessage;
 import fuzs.bagofholding.network.S2CLockSlotMessage;
+import fuzs.bagofholding.world.item.BagOfHoldingItem;
 import fuzs.puzzleslib.config.ConfigHolder;
 import fuzs.puzzleslib.core.CommonFactories;
 import fuzs.puzzleslib.core.ModConstructor;
 import fuzs.puzzleslib.network.MessageDirection;
 import fuzs.puzzleslib.network.NetworkHandler;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,5 +37,12 @@ public class BagOfHolding implements ModConstructor {
 
     private static void registerMessages() {
         NETWORK.register(S2CLockSlotMessage.class, S2CLockSlotMessage::new, MessageDirection.TO_CLIENT);
+    }
+
+    @Override
+    public void onCommonSetup() {
+        ContainerItemProvider.register(BagOfHoldingItem.class, (Player player, ItemStack stack) -> {
+            return () -> ContainerItemHelper.loadItemContainer(stack, null, ((BagOfHoldingItem) stack.getItem()).getContainerRows(), false);
+        });
     }
 }

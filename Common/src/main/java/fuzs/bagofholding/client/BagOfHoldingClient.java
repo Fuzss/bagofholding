@@ -4,7 +4,7 @@ import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.api.client.gui.screens.inventory.tooltip.ClientContainerItemTooltip;
 import fuzs.bagofholding.api.client.helper.ItemDecorationHelper;
 import fuzs.bagofholding.api.world.inventory.tooltip.ContainerItemTooltip;
-import fuzs.bagofholding.api.world.item.ContainerItemHelper;
+import fuzs.bagofholding.api.world.item.container.ContainerItemHelper;
 import fuzs.bagofholding.client.gui.screens.inventory.BagItemScreen;
 import fuzs.bagofholding.client.handler.SlotOverlayHandler;
 import fuzs.bagofholding.config.ClientConfig;
@@ -35,9 +35,9 @@ public class BagOfHoldingClient implements ClientModConstructor {
         for (Item item : Registry.ITEM) {
             if (item instanceof BagOfHoldingItem bag) {
                 context.register(item, ItemDecorationHelper.getDynamicItemDecorator((AbstractContainerScreen<?> screen, ItemStack containerStack, ItemStack carriedStack) -> {
-                    return BagOfHoldingItem.mayPlaceInBag(carriedStack) && SlotOverlayHandler.canInteractWithItem(screen, containerStack)
-                            && ContainerItemHelper.loadItemContainer(containerStack, null, bag.containerRows.getAsInt(), false).canAddItem(carriedStack);
-                }, () -> BagOfHolding.CONFIG.get(ClientConfig.class).containerItemIndicator));
+                    return BagOfHoldingItem.mayPlaceInBag(bag.type, carriedStack) && SlotOverlayHandler.canInteractWithItem(screen, containerStack)
+                            && ContainerItemHelper.loadItemContainer(containerStack, null, bag.getContainerRows(), false).canAddItem(carriedStack);
+                }, BagOfHolding.CONFIG.get(ClientConfig.class)::containerItemIndicator));
             }
         }
     }
