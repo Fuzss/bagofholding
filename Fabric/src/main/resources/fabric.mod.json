@@ -47,7 +47,8 @@
 
   "custom": {
     "cardinal-components": [
-      "${modId}:bag_perseverance"
+      "${modId}:bag_perseverance",
+      "simpleinventorycontainers:container_slot"
     ]
   }
 }

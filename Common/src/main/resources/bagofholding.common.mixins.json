@@ -9,6 +9,7 @@
     "ServerPlaceRecipeMixin"
   ],
   "client": [
+    "client.MultiPlayerGameModeMixin",
     "client.TutorialMixin"
   ],
   "injectors": {

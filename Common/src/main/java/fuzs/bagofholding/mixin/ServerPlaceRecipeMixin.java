@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ServerPlaceRecipe.class)
-public abstract class ServerPlaceRecipeMixin {
+abstract class ServerPlaceRecipeMixin {
     @Shadow
     protected Inventory inventory;
 
@@ -32,7 +32,6 @@ public abstract class ServerPlaceRecipeMixin {
                 return i;
             }
         }
-
         return -1;
     }
 }

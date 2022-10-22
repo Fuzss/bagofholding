@@ -1,12 +1,14 @@
 package fuzs.bagofholding;
 
+import fuzs.bagofholding.api.SimpleInventoryContainersApi;
+import fuzs.bagofholding.api.capability.ContainerSlotCapability;
 import fuzs.bagofholding.capability.BagPerseveranceCapability;
 import fuzs.bagofholding.data.ModLanguageProvider;
 import fuzs.bagofholding.data.ModRecipeProvider;
 import fuzs.bagofholding.init.ForgeModRegistry;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.puzzleslib.capability.ForgeCapabilityController;
-import fuzs.puzzleslib.core.CoreServices;
+import fuzs.puzzleslib.core.CommonFactories;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,7 +26,8 @@ public class BagOfHoldingForge {
 
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
-        CoreServices.FACTORIES.modConstructor(BagOfHolding.MOD_ID).accept(new BagOfHolding());
+        CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new SimpleInventoryContainersApi());
+        CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new BagOfHolding());
         ForgeModRegistry.touch();
         registerCapabilities();
         registerHandlers();
@@ -32,6 +35,7 @@ public class BagOfHoldingForge {
 
     private static void registerCapabilities() {
         ForgeCapabilityController.setCapabilityToken(ModRegistry.BAG_PERSEVERANCE_CAPABILITY, new CapabilityToken<BagPerseveranceCapability>() {});
+        ForgeCapabilityController.setCapabilityToken(fuzs.bagofholding.api.init.ModRegistry.CONTAINER_SLOT_CAPABILITY, new CapabilityToken<ContainerSlotCapability>() {});
     }
 
     private static void registerHandlers() {
