@@ -5,7 +5,7 @@ import fuzs.bagofholding.world.item.BagOfHoldingItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.tutorial.Tutorial;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +21,7 @@ abstract class TutorialMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void bagofholding$init(Minecraft p_175022_, Options p_175023_, CallbackInfo callback) {
-        this.bagItemTutorial = new ContainerItemTutorial((Tutorial) (Object) this, p_175023_, stack -> stack.getItem() instanceof BagOfHoldingItem, Component.translatable("tutorial.container.bag_of_holding.name"));
+        this.bagItemTutorial = new ContainerItemTutorial((Tutorial) (Object) this, p_175023_, stack -> stack.getItem() instanceof BagOfHoldingItem, new TranslatableComponent("tutorial.container.bag_of_holding.name"));
     }
 
     @Inject(method = "onInventoryAction", at = @At("TAIL"))

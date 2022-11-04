@@ -24,10 +24,11 @@ public class BagOfHoldingForgeClient {
     }
 
     private static void registerHandlers() {
-        MinecraftForge.EVENT_BUS.addListener((final ContainerScreenEvent.Render.Foreground evt) -> {
+        MinecraftForge.EVENT_BUS.addListener((final ContainerScreenEvent.DrawForeground evt) -> {
             SlotOverlayHandler.onDrawForeground(evt.getContainerScreen(), evt.getPoseStack(), evt.getMouseX(), evt.getMouseY());
         });
-        MinecraftForge.EVENT_BUS.addListener((final ScreenEvent.MouseScrolled.Pre evt) -> {
+        MinecraftForge.EVENT_BUS.addListener((final ScreenEvent.MouseScrollEvent.Pre evt) -> {
+            if (!BagOfHolding.CONFIG.getHolder(ServerConfig.class).isAvailable()) return;
             MouseScrollHandler.onMouseScroll(evt.getScreen(), evt.getMouseX(), evt.getMouseY(), evt.getScrollDelta(), evt.getScrollDelta(), BagOfHolding.CONFIG.get(ClientConfig.class), BagOfHolding.CONFIG.get(ServerConfig.class)).ifPresent(unit -> evt.setCanceled(true));
         });
 //        MinecraftForge.EVENT_BUS.addListener((final TickEvent.ClientTickEvent evt) -> {
