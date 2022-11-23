@@ -1,4 +1,4 @@
-package fuzs.bagofholding.api.world.item.container;
+package fuzs.bagofholding.api.world.inventory;
 
 import fuzs.bagofholding.api.capability.ContainerSlotCapability;
 import fuzs.bagofholding.api.init.ModRegistry;

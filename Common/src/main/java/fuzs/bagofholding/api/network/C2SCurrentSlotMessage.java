@@ -1,7 +1,7 @@
 package fuzs.bagofholding.api.network;
 
 import fuzs.bagofholding.api.SimpleInventoryContainersApi;
-import fuzs.bagofholding.api.world.item.container.ContainerSlotHelper;
+import fuzs.bagofholding.api.world.inventory.ContainerSlotHelper;
 import fuzs.puzzleslib.network.Message;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;

@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v4.1.5-1.19.2] - 2022-11-23
+### Changed
+- Tooltips now have a thicker border, so they look more pretty (actually had to redo most of that rendering code so this could work, oof)
+- Reverse tooltip scrolling direction
+- Bag inventory screen are now colored just like the bag's tooltip
+### Removed
+- Removed bundle-like tutorial banners when using newly added item interactions for the first time 
+
 ## [v4.1.4-1.19.2] - 2022-10-22
 ### Added
 - Added an alternative overlay for the next item to be taken from a bag on right-clicking (available in the config)

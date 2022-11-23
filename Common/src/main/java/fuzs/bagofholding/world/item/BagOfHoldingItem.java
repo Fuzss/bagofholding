@@ -13,17 +13,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreTag {
@@ -51,16 +47,6 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     @Override
     public boolean canFitInsideContainerItems() {
         return false;
-    }
-
-    @Override
-    public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickAction, Player player) {
-        return ContainerItemHelper.overrideStackedOnOther(stack, null, this.getContainerRows(), slot, clickAction, player, this::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
-    }
-
-    @Override
-    public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack stackOnMe, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
-        return ContainerItemHelper.overrideOtherStackedOnMe(stack, null, this.getContainerRows(), stackOnMe, slot, clickAction, player, slotAccess, this::mayPlaceInBag, SoundEvents.BUNDLE_INSERT, SoundEvents.BUNDLE_REMOVE_ONE);
     }
 
     @Override
@@ -95,11 +81,6 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     }
 
     @Override
-    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        return ContainerItemHelper.getTooltipImage(stack, null, this.getContainerRows(), this.type.backgroundColor);
-    }
-
-    @Override
     public void onDestroyed(ItemEntity itemEntity) {
         Stream.Builder<ItemStack> builder = Stream.builder();
         SimpleContainer container = ContainerItemHelper.loadItemContainer(itemEntity.getItem(), null, this.getContainerRows());
@@ -116,10 +97,6 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
         entity.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + entity.getLevel().getRandom().nextFloat() * 0.4F);
     }
 
-    private boolean mayPlaceInBag(ItemStack stack) {
-        return mayPlaceInBag(this.type, stack);
-    }
-
     public static boolean mayPlaceInBag(Type type, ItemStack stack) {
         Item item = stack.getItem();
         if (!type.config().bagWhitelist.isEmpty()) {
@@ -132,14 +109,18 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     }
     
     public enum Type {
-        LEATHER(DyeColor.BROWN),
-        IRON(DyeColor.WHITE),
-        GOLDEN(DyeColor.YELLOW);
-        
-        public final DyeColor backgroundColor;
+        LEATHER(DyeColor.BROWN, DyeColor.WHITE),
+        IRON(DyeColor.WHITE, null),
+        GOLDEN(DyeColor.YELLOW, DyeColor.WHITE);
 
-        Type(DyeColor backgroundColor) {
+        @Nullable
+        public final DyeColor backgroundColor;
+        @Nullable
+        public final DyeColor textColor;
+
+        Type(@Nullable DyeColor backgroundColor, @Nullable DyeColor textColor) {
             this.backgroundColor = backgroundColor;
+            this.textColor = textColor;
         }
         
         public ServerConfig.BagOfHoldingConfig config() {

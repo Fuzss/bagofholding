@@ -1,5 +1,6 @@
 package fuzs.bagofholding.api.world.item.container;
 
+import fuzs.bagofholding.api.world.inventory.ContainerSlotHelper;
 import fuzs.bagofholding.api.world.inventory.SimpleContainerWithSlots;
 import fuzs.bagofholding.api.world.inventory.tooltip.ContainerItemTooltip;
 import net.minecraft.core.NonNullList;
@@ -52,8 +53,10 @@ public class ContainerItemHelper {
                 stack.addTagElement("Items", listTag);
             }
         } else {
-            CompoundTag tag = new CompoundTag();
+            CompoundTag tag = BlockItem.getBlockEntityData(stack);
+            if (tag == null) tag = new CompoundTag();
             if (!listTag.isEmpty()) {
+                tag.remove("Items");
                 tag.put("Items", listTag);
             }
             BlockItem.setBlockEntityData(stack, blockEntityType, tag);
@@ -142,21 +145,34 @@ public class ContainerItemHelper {
         if (compoundtag == null || !compoundtag.contains("Items")) {
             return Optional.empty();
         }
-        SimpleContainer container = loadItemContainer(stack, blockEntityType, containerRows);
+        SimpleContainer container = loadItemContainer(stack, blockEntityType, containerRows, false);
         return getTooltipImage(container, containerRows, backgroundColor);
     }
 
     public static Optional<TooltipComponent> getTooltipImage(SimpleContainer container, int containerRows, @Nullable DyeColor backgroundColor) {
+        return getTooltipImageWithColor(container, containerRows, getBackgroundColor(backgroundColor));
+    }
+
+    public static Optional<TooltipComponent> getTooltipImageWithColor(SimpleContainer container, int containerRows, float[] backgroundColor) {
         NonNullList<ItemStack> items = NonNullList.create();
         for (int i = 0; i < container.getContainerSize(); i++) {
             items.add(container.getItem(i));
         }
-        return Optional.of(new ContainerItemTooltip(items, containerRows, backgroundColor));
+        return Optional.of(new ContainerItemTooltip(items, 9, containerRows, backgroundColor));
+    }
+
+    public static float[] getBackgroundColor(@Nullable DyeColor backgroundColor) {
+        if (backgroundColor == null) {
+            return new float[]{1.0F, 1.0F, 1.0F};
+        } else if (backgroundColor == DyeColor.WHITE) {
+            return new float[]{0.9019608F, 0.9019608F, 0.9019608F};
+        } else {
+            return backgroundColor.getTextureDiffuseColors();
+        }
     }
 
     @Nullable
     private static CompoundTag getDataTagFromItem(ItemStack stack, @Nullable BlockEntityType<?> blockEntityType) {
-        if (blockEntityType != null) return BlockItem.getBlockEntityData(stack);
-        return stack.getTag();
+        return blockEntityType != null ? BlockItem.getBlockEntityData(stack) : stack.getTag();
     }
 }

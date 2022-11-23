@@ -8,32 +8,34 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 public class BagItemMenu extends AbstractContainerMenu {
     private final Container container;
-    private final int containerRows;
+    private final BagOfHoldingItem.Type bagType;
     private int hotbarStartIndex;
 
     public static ModMenuSupplier<BagItemMenu> create(BagOfHoldingItem.Type type) {
         return (int containerId, Inventory inventory) -> new BagItemMenu(type, containerId, inventory);
     }
 
-    private BagItemMenu(BagOfHoldingItem.Type type, int containerId, Inventory inventory) {
-        this(type, containerId, inventory, new SimpleContainerWithSlots(type.config().rows));
+    private BagItemMenu(BagOfHoldingItem.Type bagType, int containerId, Inventory inventory) {
+        this(bagType, containerId, inventory, new SimpleContainerWithSlots(bagType.config().rows));
     }
 
-    public BagItemMenu(BagOfHoldingItem.Type type, int containerId, Inventory inventory, Container container) {
-        super(type.menuType(), containerId);
-        final int containerRows = type.config().rows;
-        this.containerRows = containerRows;
+    public BagItemMenu(BagOfHoldingItem.Type bagType, int containerId, Inventory inventory, Container container) {
+        super(bagType.menuType(), containerId);
+        this.bagType = bagType;
+        final int containerRows = bagType.config().rows;
         checkContainerSize(container, containerRows * 9);
         this.container = container;
         container.startOpen(inventory.player);
         int i = (containerRows - 4) * 18;
         for (int j = 0; j < containerRows; ++j) {
             for (int k = 0; k < 9; ++k) {
-                this.addSlot(new FilteredBagSlot(type, container, k + j * 9, 8 + k * 18, 18 + j * 18));
+                this.addSlot(new FilteredBagSlot(bagType, container, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
         }
         for (int l = 0; l < 3; ++l) {
@@ -86,15 +88,20 @@ public class BagItemMenu extends AbstractContainerMenu {
     }
 
     public int getRowCount() {
-        return this.containerRows;
+        return this.bagType.config().rows;
+    }
+
+    @Nullable
+    public DyeColor getBackgroundColor() {
+        return this.bagType.backgroundColor;
+    }
+
+    @Nullable
+    public DyeColor getTextColor() {
+        return this.bagType.textColor;
     }
 
     public int getHotbarStartIndex() {
         return this.hotbarStartIndex;
-    }
-
-    @FunctionalInterface
-    public interface Factory {
-        BagItemMenu create(int containerId, Inventory inventory, Container container);
     }
 }

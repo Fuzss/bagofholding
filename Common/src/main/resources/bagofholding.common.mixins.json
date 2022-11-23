@@ -5,12 +5,12 @@
   "package": "fuzs.bagofholding.mixin",
   "refmap": "bagofholding.refmap.json",
   "mixins": [
+    "ItemMixin",
     "PlayerMixin",
     "ServerPlaceRecipeMixin"
   ],
   "client": [
-    "client.MultiPlayerGameModeMixin",
-    "client.TutorialMixin"
+    "client.MultiPlayerGameModeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

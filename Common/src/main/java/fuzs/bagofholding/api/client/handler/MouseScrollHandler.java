@@ -4,8 +4,8 @@ import fuzs.bagofholding.api.SimpleInventoryContainersApi;
 import fuzs.bagofholding.api.config.ClientConfigCore;
 import fuzs.bagofholding.api.config.ServerConfigCore;
 import fuzs.bagofholding.api.network.C2SCurrentSlotMessage;
-import fuzs.bagofholding.api.world.item.container.ContainerItemProvider;
-import fuzs.bagofholding.api.world.item.container.ContainerSlotHelper;
+import fuzs.bagofholding.api.world.inventory.ContainerItemProvider;
+import fuzs.bagofholding.api.world.inventory.ContainerSlotHelper;
 import fuzs.puzzleslib.client.gui.screens.CommonScreens;
 import fuzs.puzzleslib.proxy.Proxy;
 import net.minecraft.client.Minecraft;
@@ -34,7 +34,7 @@ public class MouseScrollHandler {
                     if (signum != 0) {
                         Player player = CommonScreens.INSTANCE.getMinecraft(screen).player;
                         int currentContainerSlot = ContainerSlotHelper.getCurrentContainerSlot(player);
-                        currentContainerSlot = ContainerSlotHelper.findClosestSlotWithContent(ContainerItemProvider.get(stack.getItem()).getItemContainer(player, stack).get(), currentContainerSlot, signum > 0);
+                        currentContainerSlot = ContainerSlotHelper.findClosestSlotWithContent(ContainerItemProvider.get(stack.getItem()).getItemContainer(player, stack, false), currentContainerSlot, signum < 0);
                         ContainerSlotHelper.setCurrentContainerSlot(player, currentContainerSlot);
                     }
                     return Optional.of(Unit.INSTANCE);
