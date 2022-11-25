@@ -54,9 +54,12 @@ public class ContainerItemHelper {
             }
         } else {
             CompoundTag tag = BlockItem.getBlockEntityData(stack);
-            if (tag == null) tag = new CompoundTag();
-            if (!listTag.isEmpty()) {
+            if (tag == null) {
+                tag = new CompoundTag();
+            } else {
                 tag.remove("Items");
+            }
+            if (!listTag.isEmpty()) {
                 tag.put("Items", listTag);
             }
             BlockItem.setBlockEntityData(stack, blockEntityType, tag);

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v4.1.6-1.19.2] - 2022-11-25
+### Fixed
+- Fixed a dupe glitch where the last item in a bag could be taken out indefinitely when interacting with the item
+
 ## [v4.1.5-1.19.2] - 2022-11-23
 ### Changed
 - Tooltips now have a thicker border, so they look more pretty (actually had to redo most of that rendering code so this could work, oof)
