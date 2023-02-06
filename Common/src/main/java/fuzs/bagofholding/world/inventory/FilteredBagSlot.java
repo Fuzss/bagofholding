@@ -17,4 +17,9 @@ public class FilteredBagSlot extends Slot {
    public boolean mayPlace(ItemStack stack) {
       return BagOfHoldingItem.mayPlaceInBag(this.type, stack);
    }
+
+   @Override
+   public int getMaxStackSize(ItemStack stack) {
+      return this.getMaxStackSize();
+   }
 }

@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
-public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
+public class BagItemScreen extends AbstractContainerScreen2<BagItemMenu> {
    private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation("textures/gui/container/generic_54.png");
 
    public BagItemScreen(BagItemMenu menu, Inventory inventory, Component title) {

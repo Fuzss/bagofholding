@@ -45,4 +45,9 @@ public class SimpleContainerWithSlots extends SimpleContainer {
 
         return listtag;
     }
+
+    @Override
+    public int getMaxStackSize() {
+        return Integer.MAX_VALUE / 2;
+    }
 }
