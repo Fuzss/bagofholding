@@ -2,11 +2,11 @@ package fuzs.bagofholding.network;
 
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
-import fuzs.puzzleslib.network.Message;
+import fuzs.puzzleslib.api.network.v2.MessageV2;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class S2CLockSlotMessage implements Message<S2CLockSlotMessage> {
+public class S2CLockSlotMessage implements MessageV2<S2CLockSlotMessage> {
     private int containerId;
     private int slotId;
 

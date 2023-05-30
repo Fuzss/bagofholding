@@ -8,17 +8,17 @@ import net.minecraft.world.item.ItemStack;
 public class LockableInventorySlot extends Slot {
    private boolean locked;
 
-   public LockableInventorySlot(Container p_40202_, int p_40203_, int p_40204_, int p_40205_) {
-      super(p_40202_, p_40203_, p_40204_, p_40205_);
+   public LockableInventorySlot(Container container, int slot, int x, int y) {
+      super(container, slot, x, y);
    }
 
    @Override
-   public boolean mayPlace(ItemStack p_40231_) {
+   public boolean mayPlace(ItemStack stack) {
       return !this.locked;
    }
 
    @Override
-   public boolean mayPickup(Player p_40228_) {
+   public boolean mayPickup(Player player) {
       return !this.locked;
    }
 

@@ -1,15 +1,17 @@
 package fuzs.bagofholding;
 
-import fuzs.bagofholding.api.SimpleInventoryContainersApi;
-import fuzs.bagofholding.api.capability.ContainerSlotCapability;
 import fuzs.bagofholding.capability.BagPerseveranceCapability;
+import fuzs.bagofholding.data.ModItemContainerProvider;
 import fuzs.bagofholding.data.ModLanguageProvider;
+import fuzs.bagofholding.data.ModModelProvider;
 import fuzs.bagofholding.data.ModRecipeProvider;
 import fuzs.bagofholding.init.ForgeModRegistry;
 import fuzs.bagofholding.init.ModRegistry;
-import fuzs.puzzleslib.capability.ForgeCapabilityController;
-import fuzs.puzzleslib.core.CommonFactories;
+import fuzs.puzzleslib.api.capability.v2.ForgeCapabilityHelper;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -20,6 +22,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 
+import java.util.concurrent.CompletableFuture;
+
 @Mod(BagOfHolding.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BagOfHoldingForge {
@@ -27,18 +31,17 @@ public class BagOfHoldingForge {
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
         ForgeModRegistry.touch();
-        CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new SimpleInventoryContainersApi());
-        CommonFactories.INSTANCE.modConstructor(BagOfHolding.MOD_ID).accept(new BagOfHolding());
+        ModConstructor.construct(BagOfHolding.MOD_ID, BagOfHolding::new);
         registerCapabilities();
         registerHandlers();
     }
 
     private static void registerCapabilities() {
-        ForgeCapabilityController.setCapabilityToken(ModRegistry.BAG_PERSEVERANCE_CAPABILITY, new CapabilityToken<BagPerseveranceCapability>() {});
-        ForgeCapabilityController.setCapabilityToken(fuzs.bagofholding.api.init.ModRegistry.CONTAINER_SLOT_CAPABILITY, new CapabilityToken<ContainerSlotCapability>() {});
+        ForgeCapabilityHelper.setCapabilityToken(ModRegistry.BAG_PERSEVERANCE_CAPABILITY, new CapabilityToken<BagPerseveranceCapability>() {});
     }
 
     private static void registerHandlers() {
+        // TODO move to common puzzles implementation in 1.19.4
         MinecraftForge.EVENT_BUS.addListener((final PlayerEvent.Clone evt) -> {
             if (!evt.isWasDeath()) return;
             if (evt.getOriginal() instanceof ServerPlayer player) {
@@ -53,9 +56,13 @@ public class BagOfHoldingForge {
 
     @SubscribeEvent
     public static void onGatherData(final GatherDataEvent evt) {
-        DataGenerator generator = evt.getGenerator();
-        final ExistingFileHelper existingFileHelper = evt.getExistingFileHelper();
-        generator.addProvider(true, new ModRecipeProvider(generator));
-        generator.addProvider(true, new ModLanguageProvider(generator, BagOfHolding.MOD_ID));
+        final DataGenerator dataGenerator = evt.getGenerator();
+        final PackOutput packOutput = dataGenerator.getPackOutput();
+        final CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
+        final ExistingFileHelper fileHelper = evt.getExistingFileHelper();
+        dataGenerator.addProvider(true, new ModItemContainerProvider(packOutput));
+        dataGenerator.addProvider(true, new ModLanguageProvider(packOutput, BagOfHolding.MOD_ID));
+        dataGenerator.addProvider(true, new ModModelProvider(packOutput, BagOfHolding.MOD_ID, fileHelper));
+        dataGenerator.addProvider(true, new ModRecipeProvider(packOutput));
     }
 }

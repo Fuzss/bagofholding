@@ -27,19 +27,31 @@
     ],
     "client": [
       "${clientEntryPoint}"
+    ],
+    "cardinal-components": [
+      "fuzs.puzzleslib.api.capability.v2.initializer.EntityComponentInitializerImpl"
     ]
   },
 
   "mixins": [
-    "${modId}.common.mixins.json",
-    "${modId}.fabric.mixins.json"
+    "${modId}.common.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=${minFabricVersion}",
     "fabric-api": ">=${minFabricApiVersion}",
     "puzzleslib": ">=${minPuzzlesVersion}",
+    "extensibleenums": "*",
+    "cardinal-components-base": "*",
+    "cardinal-components-entity": "*",
+    "iteminteractionscore": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
+  },
+
+  "custom": {
+    "cardinal-components": [
+      "${modId}:bag_perseverance"
+    ]
   }
 }

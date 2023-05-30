@@ -1,19 +1,16 @@
 package fuzs.bagofholding;
 
-import fuzs.bagofholding.api.world.inventory.ContainerItemProvider;
-import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.bagofholding.network.S2CLockSlotMessage;
-import fuzs.bagofholding.world.inventory.BagOfHoldingProvider;
-import fuzs.bagofholding.world.item.BagOfHoldingItem;
-import fuzs.puzzleslib.config.ConfigHolder;
-import fuzs.puzzleslib.core.CommonFactories;
-import fuzs.puzzleslib.core.ModConstructor;
-import fuzs.puzzleslib.network.MessageDirection;
-import fuzs.puzzleslib.network.NetworkHandler;
-import net.minecraft.core.Registry;
-import net.minecraft.world.item.Item;
+import fuzs.puzzleslib.api.config.v3.ConfigHolder;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
+import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
+import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
+import fuzs.puzzleslib.api.network.v2.MessageDirection;
+import fuzs.puzzleslib.api.network.v2.NetworkHandlerV2;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +19,11 @@ public class BagOfHolding implements ModConstructor {
     public static final String MOD_NAME = "Bag Of Holding";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final NetworkHandler NETWORK = CommonFactories.INSTANCE.network(MOD_ID);
-    @SuppressWarnings("Convert2MethodRef")
-    public static final ConfigHolder CONFIG = CommonFactories.INSTANCE
-            .clientConfig(ClientConfig.class, () -> new ClientConfig())
-            .serverConfig(ServerConfig.class, () -> new ServerConfig());
+    public static final NetworkHandlerV2 NETWORK = NetworkHandlerV2.build(MOD_ID);
+    public static final ConfigHolder CONFIG = ConfigHolder.builder(MOD_ID).server(ServerConfig.class);
 
     @Override
     public void onConstructMod() {
-        CONFIG.bakeConfigs(MOD_ID);
         ModRegistry.touch();
         registerMessages();
     }
@@ -40,11 +33,15 @@ public class BagOfHolding implements ModConstructor {
     }
 
     @Override
-    public void onCommonSetup() {
-        for (Item item : Registry.ITEM) {
-            if (item instanceof BagOfHoldingItem bag) {
-                ContainerItemProvider.register(item, new BagOfHoldingProvider(bag.type));
-            }
-        }
+    public void onRegisterCreativeModeTabs(CreativeModeTabContext context) {
+        context.registerCreativeModeTab(CreativeModeTabConfigurator.from(MOD_ID).icon(() -> new ItemStack(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.get())).displayItems((featureFlagSet, output, bl) -> {
+            output.accept(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.get());
+            output.accept(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.get());
+            output.accept(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.get());
+        }).appendEnchantmentsAndPotions());
+    }
+
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MOD_ID, path);
     }
 }

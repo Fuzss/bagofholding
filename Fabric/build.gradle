@@ -48,6 +48,16 @@ dependencies {
     modApi "net.fabricmc:fabric-loader:${fabricVersion}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}"
 
+    // Cardinal Components
+    modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.1.0")
+    modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.1.0")
+
+    // Extensible Enums
+    modApi include("fuzs.extensibleenums:extensibleenums-fabric:4.0.0")
+
+    // Item Interactions Core
+    modApi include("fuzs.iteminteractionscore:iteminteractionscore-fabric:5.0.1")
+
     // Quality of Life Mods
     modLocalRuntime "com.terraformersmc:modmenu:5.0.2"
     modLocalRuntime "curse.maven:configured-fabric-667378:4441611"
@@ -216,6 +226,7 @@ curseforge {
                 requiredDependency 'fabric-api'
                 requiredDependency 'forge-config-api-port-fabric'
                 requiredDependency 'puzzles-lib'
+                embeddedLibrary 'cardinal-components'
             }
         }
 //        addArtifact sourcesJar
@@ -245,6 +256,7 @@ modrinth {
         required.project 'fabric-api'
         required.project 'forge-config-api-port'
         required.project 'puzzles-lib'
+        embedded.project 'cardinal-components-api'
     }
 //	debugMode = true
 }

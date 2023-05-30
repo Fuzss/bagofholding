@@ -17,18 +17,18 @@ abstract class ServerPlaceRecipeMixin {
     protected Inventory inventory;
 
     @ModifyVariable(method = "moveItemToGrid", at = @At("STORE"), ordinal = 0)
-    protected int bagofholding$moveItemToGrid(int itemIndex, Slot p_135439_, ItemStack p_135440_) {
-        if (p_135440_.getItem() instanceof RecipesIgnoreTag) {
-            return this.bagofholding$findSlotMatchingItem(this.inventory, p_135440_);
+    protected int moveItemToGrid(int index, Slot slot, ItemStack stack) {
+        if (stack.getItem() instanceof RecipesIgnoreTag) {
+            return this.bagofholding$findSlotMatchingItem(this.inventory, stack);
         }
-        return itemIndex;
+        return index;
     }
 
     @Unique
-    private int bagofholding$findSlotMatchingItem(Inventory inventory, ItemStack p_36031_) {
+    private int bagofholding$findSlotMatchingItem(Inventory inventory, ItemStack stack) {
         for(int i = 0; i < inventory.items.size(); ++i) {
             // vanilla uses many more checks here for tag/damage/enchantment/name
-            if (!inventory.items.get(i).isEmpty() && p_36031_.is(inventory.items.get(i).getItem())) {
+            if (!inventory.items.get(i).isEmpty() && stack.is(inventory.items.get(i).getItem())) {
                 return i;
             }
         }

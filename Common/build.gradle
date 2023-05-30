@@ -15,6 +15,9 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${minecraftVersion}:${parchmentMappingsVersion}@zip")
     }
 
+    // Item Interactions Core
+    modApi "fuzs.iteminteractionscore:iteminteractionscore-common:5.0.1"
+
     // Puzzles Lib
     modApi "fuzs.puzzleslib:puzzleslib-common:${puzzlesVersion}"
 }

@@ -1,12 +1,12 @@
 package fuzs.bagofholding.world.inventory;
 
-import fuzs.bagofholding.api.world.inventory.SimpleContainerWithSlots;
 import fuzs.bagofholding.world.item.BagOfHoldingItem;
-import fuzs.puzzleslib.init.builder.ModMenuSupplier;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -17,12 +17,12 @@ public class BagItemMenu extends AbstractContainerMenu {
     private final BagOfHoldingItem.Type bagType;
     private int hotbarStartIndex;
 
-    public static ModMenuSupplier<BagItemMenu> create(BagOfHoldingItem.Type type) {
+    public static MenuType.MenuSupplier<BagItemMenu> create(BagOfHoldingItem.Type type) {
         return (int containerId, Inventory inventory) -> new BagItemMenu(type, containerId, inventory);
     }
 
     private BagItemMenu(BagOfHoldingItem.Type bagType, int containerId, Inventory inventory) {
-        this(bagType, containerId, inventory, new SimpleContainerWithSlots(bagType.config().rows));
+        this(bagType, containerId, inventory, new SimpleContainer(bagType.config().rows * 9));
     }
 
     public BagItemMenu(BagOfHoldingItem.Type bagType, int containerId, Inventory inventory, Container container) {

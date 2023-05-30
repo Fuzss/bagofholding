@@ -1,13 +1,9 @@
 package fuzs.bagofholding.world.item;
 
-import fuzs.bagofholding.world.inventory.BagItemMenu;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.function.IntSupplier;
 
 public class FabricBagOfHoldingItem extends BagOfHoldingItem implements FabricItem {
 

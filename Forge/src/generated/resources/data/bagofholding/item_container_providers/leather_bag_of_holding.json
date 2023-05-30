@@ -1,0 +1,7 @@
+{
+  "type": "iteminteractionscore:item",
+  "background_color": "brown",
+  "filter_container_items": true,
+  "inventory_height": 1,
+  "inventory_width": 9
+}

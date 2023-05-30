@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 public class FilteredBagSlot extends Slot {
    private final BagOfHoldingItem.Type type;
 
-   public FilteredBagSlot(BagOfHoldingItem.Type type, Container p_40202_, int p_40203_, int p_40204_, int p_40205_) {
-      super(p_40202_, p_40203_, p_40204_, p_40205_);
+   public FilteredBagSlot(BagOfHoldingItem.Type type, Container container, int slot, int x, int y) {
+      super(container, slot, x, y);
       this.type = type;
    }
 

@@ -1,12 +1,13 @@
 package fuzs.bagofholding.world.item;
 
 import fuzs.bagofholding.BagOfHolding;
-import fuzs.bagofholding.api.world.item.container.ContainerItemHelper;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.bagofholding.network.S2CLockSlotMessage;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
+import fuzs.iteminteractionscore.api.container.v1.ContainerItemHelper;
+import fuzs.iteminteractionscore.api.container.v1.provider.ItemContainerProvider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreTag {
@@ -28,10 +30,6 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     public BagOfHoldingItem(Properties properties, Type type) {
         super(properties);
         this.type = type;
-    }
-
-    public int getContainerRows() {
-        return this.type.config().rows;
     }
 
     @Override
@@ -63,7 +61,9 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     private MenuProvider getMenuProvider(ItemStack stack) {
         return new SimpleMenuProvider((containerId, inventory, player) -> {
-            SimpleContainer container = ContainerItemHelper.loadItemContainer(stack, null, this.getContainerRows());
+            ItemContainerProvider provider = ContainerItemHelper.INSTANCE.getItemContainerProvider(stack);
+            Objects.requireNonNull(provider, "provider is null");
+            SimpleContainer container = provider.getItemContainer(stack, player, true);
             return new BagItemMenu(this.type, containerId, inventory, container);
         }, stack.getHoverName());
     }
@@ -83,7 +83,9 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
     @Override
     public void onDestroyed(ItemEntity itemEntity) {
         Stream.Builder<ItemStack> builder = Stream.builder();
-        SimpleContainer container = ContainerItemHelper.loadItemContainer(itemEntity.getItem(), null, this.getContainerRows());
+        ItemContainerProvider provider = ContainerItemHelper.INSTANCE.getItemContainerProvider(itemEntity.getItem());
+        Objects.requireNonNull(provider, "provider is null");
+        SimpleContainer container = provider.getItemContainer(itemEntity.getItem(), null, true);
         for (int i = 0; i < container.getContainerSize(); i++) {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {
