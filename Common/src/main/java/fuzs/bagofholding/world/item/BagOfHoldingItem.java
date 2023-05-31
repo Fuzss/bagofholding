@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.*;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
@@ -22,10 +21,11 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreTag {
-    public final Type type;
+    private final Type type;
 
     public BagOfHoldingItem(Properties properties, Type type) {
         super(properties);
@@ -52,11 +52,11 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
             player.openMenu(this.getMenuProvider(stack));
-            this.playDropContentsSound(player);
             player.awardStat(Stats.ITEM_USED.get(this));
             this.lockMySlot(player, stack);
         }
-        return InteractionResultHolder.consume(stack);
+        player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + level.getRandom().nextFloat() * 0.4F);
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
 
     private MenuProvider getMenuProvider(ItemStack stack) {
@@ -82,34 +82,13 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     @Override
     public void onDestroyed(ItemEntity itemEntity) {
-        Stream.Builder<ItemStack> builder = Stream.builder();
         ItemContainerProvider provider = ContainerItemHelper.INSTANCE.getItemContainerProvider(itemEntity.getItem());
         Objects.requireNonNull(provider, "provider is null");
         SimpleContainer container = provider.getItemContainer(itemEntity.getItem(), null, true);
-        for (int i = 0; i < container.getContainerSize(); i++) {
-            ItemStack stack = container.getItem(i);
-            if (!stack.isEmpty()) {
-                builder.add(stack);
-            }
-        }
-        ItemUtils.onContainerDestroyed(itemEntity, builder.build());
+        Stream<ItemStack> stream = ContainerItemHelper.INSTANCE.getListFromContainer(container).stream().filter(Predicate.not(ItemStack::isEmpty));
+        ItemUtils.onContainerDestroyed(itemEntity, stream);
     }
 
-    private void playDropContentsSound(Entity entity) {
-        entity.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + entity.getLevel().getRandom().nextFloat() * 0.4F);
-    }
-
-    public static boolean mayPlaceInBag(Type type, ItemStack stack) {
-        Item item = stack.getItem();
-        if (!type.config().bagWhitelist.isEmpty()) {
-            return type.config().bagWhitelist.contains(item);
-        }
-        if (!item.canFitInsideContainerItems()) {
-            return false;
-        }
-        return !type.config().bagBlacklist.contains(item);
-    }
-    
     public enum Type {
         LEATHER(DyeColor.BROWN, DyeColor.WHITE),
         IRON(DyeColor.WHITE, null),

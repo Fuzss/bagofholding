@@ -3,6 +3,7 @@ package fuzs.bagofholding.world.inventory;
 import fuzs.bagofholding.world.item.BagOfHoldingItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class FilteredBagSlot extends Slot {
@@ -15,6 +16,17 @@ public class FilteredBagSlot extends Slot {
 
    @Override
    public boolean mayPlace(ItemStack stack) {
-      return BagOfHoldingItem.mayPlaceInBag(this.type, stack);
+      return mayPlaceInBag(this.type, stack);
    }
+
+    public static boolean mayPlaceInBag(BagOfHoldingItem.Type type, ItemStack stack) {
+        Item item = stack.getItem();
+        if (!type.config().bagWhitelist.isEmpty()) {
+            return type.config().bagWhitelist.contains(item);
+        }
+        if (!item.canFitInsideContainerItems()) {
+            return false;
+        }
+        return !type.config().bagBlacklist.contains(item);
+    }
 }
