@@ -34,7 +34,7 @@ public class BagOfHolding implements ModConstructor {
 
     @Override
     public void onRegisterCreativeModeTabs(CreativeModeTabContext context) {
-        context.registerCreativeModeTab(CreativeModeTabConfigurator.from(MOD_ID).icon(() -> new ItemStack(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.get())).displayItems((featureFlagSet, output, bl) -> {
+        context.registerCreativeModeTab(CreativeModeTabConfigurator.from(MOD_ID).icon(() -> new ItemStack(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.get())).displayItems((itemDisplayParameters, output) -> {
             output.accept(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.get());
             output.accept(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.get());
             output.accept(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.get());

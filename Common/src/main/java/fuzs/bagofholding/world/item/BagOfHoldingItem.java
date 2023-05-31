@@ -91,7 +91,7 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     public enum Type {
         LEATHER(DyeColor.BROWN, DyeColor.WHITE),
-        IRON(DyeColor.WHITE, null),
+        IRON(DyeColor.LIGHT_GRAY, DyeColor.WHITE),
         GOLDEN(DyeColor.YELLOW, DyeColor.WHITE);
 
         @Nullable

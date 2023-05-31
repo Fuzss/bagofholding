@@ -15,7 +15,7 @@ public class ModItemContainerProvider extends AbstractItemContainerProvider {
     @Override
     protected void registerBuiltInProviders() {
         this.add(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.get(), new SimpleItemProvider(9, 1, DyeColor.BROWN).filterContainerItems());
-        this.add(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.get(), new SimpleItemProvider(9, 3, DyeColor.WHITE).filterContainerItems());
+        this.add(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.get(), new SimpleItemProvider(9, 3, DyeColor.LIGHT_GRAY).filterContainerItems());
         this.add(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.get(), new SimpleItemProvider(9, 6, DyeColor.YELLOW).filterContainerItems());
     }
 }

@@ -10,7 +10,7 @@ import fuzs.bagofholding.world.item.crafting.BagUpgradeRecipe;
 import fuzs.bagofholding.world.item.enchantment.PreservationEnchantment;
 import fuzs.puzzleslib.api.capability.v2.CapabilityController;
 import fuzs.puzzleslib.api.capability.v2.data.CapabilityKey;
-import fuzs.puzzleslib.api.capability.v2.data.PlayerRespawnStrategy;
+import fuzs.puzzleslib.api.capability.v2.data.PlayerRespawnCopyStrategy;
 import fuzs.puzzleslib.api.init.v2.RegistryManager;
 import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import net.minecraft.core.registries.Registries;
@@ -38,7 +38,7 @@ public class ModRegistry {
     public static final RegistryReference<RecipeSerializer<ShapedRecipe>> BAG_UPGRADE_RECIPE_SERIALIZER = REGISTRY.register(Registries.RECIPE_SERIALIZER, "crafting_special_bag_upgrade", () -> new BagUpgradeRecipe.Serializer());
 
     private static final CapabilityController CAPABILITIES = CapabilityController.from(BagOfHolding.MOD_ID);
-    public static final CapabilityKey<BagPerseveranceCapability> BAG_PERSEVERANCE_CAPABILITY = CAPABILITIES.registerPlayerCapability("bag_perseverance", BagPerseveranceCapability.class, player -> new BagPerseveranceCapabilityImpl(), PlayerRespawnStrategy.NEVER);
+    public static final CapabilityKey<BagPerseveranceCapability> BAG_PERSEVERANCE_CAPABILITY = CAPABILITIES.registerPlayerCapability("bag_perseverance", BagPerseveranceCapability.class, player -> new BagPerseveranceCapabilityImpl(), PlayerRespawnCopyStrategy.NEVER);
 
     public static void touch() {
 

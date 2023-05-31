@@ -25,5 +25,6 @@
   ],
   "result": {
     "item": "bagofholding:golden_bag_of_holding"
-  }
+  },
+  "show_notification": true
 }

@@ -25,5 +25,6 @@
   ],
   "result": {
     "item": "bagofholding:iron_bag_of_holding"
-  }
+  },
+  "show_notification": true
 }
