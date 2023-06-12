@@ -30,5 +30,6 @@
     "recipes": [
       "bagofholding:golden_bag_of_holding"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

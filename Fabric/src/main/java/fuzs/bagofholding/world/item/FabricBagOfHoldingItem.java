@@ -14,6 +14,6 @@ public class FabricBagOfHoldingItem extends BagOfHoldingItem implements FabricIt
     @Override
     public boolean allowNbtUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
         // changes to the tag otherwise trigger the re-equip animation
-        return !ItemStack.isSame(oldStack, newStack);
+        return !ItemStack.isSameItem(oldStack, newStack);
     }
 }
