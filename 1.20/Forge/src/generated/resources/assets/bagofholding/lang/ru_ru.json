@@ -1,0 +1,8 @@
+{
+  "enchantment.bagofholding.preservation": "Сбережение",
+  "enchantment.bagofholding.preservation.desc": "Предотвращает потерю сумки в случае смерти. Уровень зачарования при этом уменьшается на единицу.",
+  "item.bagofholding.golden_bag_of_holding": "Золотая сумка",
+  "item.bagofholding.iron_bag_of_holding": "Железная сумка",
+  "item.bagofholding.leather_bag_of_holding": "Кожаная сумка",
+  "itemGroup.bagofholding.main": "Сумка для хранения"
+}
