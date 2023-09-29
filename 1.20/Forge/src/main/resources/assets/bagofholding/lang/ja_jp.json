@@ -1,0 +1,8 @@
+{
+    "enchantment.bagofholding.preservation": "保持",
+    "enchantment.bagofholding.preservation.desc": "死亡時にカバンを引き継ぎます。発動するごとにエンチャントのレベルが1ずつ減ります。",
+    "item.bagofholding.golden_bag_of_holding": "金のカバン",
+    "item.bagofholding.iron_bag_of_holding": "鉄のカバン",
+    "item.bagofholding.leather_bag_of_holding": "革のカバン",
+    "itemGroup.bagofholding.main": "カバン"
+}
