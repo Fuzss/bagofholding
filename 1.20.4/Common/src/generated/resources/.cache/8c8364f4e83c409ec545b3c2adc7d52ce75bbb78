@@ -1,0 +1,7 @@
+// 1.20.4	2024-02-15T16:09:21.11188	Tags for minecraft:item mod id vanilla
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/bagofholding/tags/items/allowed_in_golden_bag.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/bagofholding/tags/items/allowed_in_iron_bag.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/bagofholding/tags/items/allowed_in_leather_bag.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/bagofholding/tags/items/not_allowed_in_golden_bag.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/bagofholding/tags/items/not_allowed_in_iron_bag.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/bagofholding/tags/items/not_allowed_in_leather_bag.json

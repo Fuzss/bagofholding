@@ -13,14 +13,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Player.class)
 abstract class PlayerMixin extends LivingEntity {
 
-    protected PlayerMixin(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
-        super(p_20966_, p_20967_);
+    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Inject(method = "dropEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;dropEquipment()V", shift = At.Shift.AFTER))
     protected void dropEquipment(CallbackInfo callback) {
         // on Forge using LivingDropsEvent would work, requires a different implementation though
         // just do it like this since the event is hard to replicate on Fabric anyway due to the whole capturing of drops Forge does
-        ModRegistry.BAG_PERSEVERANCE_CAPABILITY.maybeGet(this).ifPresent(capability -> capability.saveOnDeath(Player.class.cast(this)));
+        ModRegistry.BAG_PERSEVERANCE_CAPABILITY.get(Player.class.cast(this)).saveOnDeath();
     }
 }

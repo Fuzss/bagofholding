@@ -19,13 +19,14 @@ abstract class ServerPlaceRecipeMixin {
     @ModifyVariable(method = "moveItemToGrid", at = @At("STORE"), ordinal = 0)
     protected int moveItemToGrid(int index, Slot slot, ItemStack stack) {
         if (stack.getItem() instanceof RecipesIgnoreTag) {
-            return this.bagofholding$findSlotMatchingItem(this.inventory, stack);
+            return bagofholding$findSlotMatchingItem(this.inventory, stack);
+        } else {
+            return index;
         }
-        return index;
     }
 
     @Unique
-    private int bagofholding$findSlotMatchingItem(Inventory inventory, ItemStack stack) {
+    private static int bagofholding$findSlotMatchingItem(Inventory inventory, ItemStack stack) {
         for(int i = 0; i < inventory.items.size(); ++i) {
             // vanilla uses many more checks here for tag/damage/enchantment/name
             if (!inventory.items.get(i).isEmpty() && stack.is(inventory.items.get(i).getItem())) {

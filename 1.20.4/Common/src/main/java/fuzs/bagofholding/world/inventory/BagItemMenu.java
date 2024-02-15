@@ -1,6 +1,6 @@
 package fuzs.bagofholding.world.inventory;
 
-import fuzs.bagofholding.world.item.BagOfHoldingItem;
+import fuzs.bagofholding.world.item.BagType;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,21 +14,21 @@ import org.jetbrains.annotations.Nullable;
 
 public class BagItemMenu extends AbstractContainerMenu {
     private final Container container;
-    private final BagOfHoldingItem.Type bagType;
+    private final BagType bagType;
     private int hotbarStartIndex;
 
-    public static MenuType.MenuSupplier<BagItemMenu> create(BagOfHoldingItem.Type type) {
+    public static MenuType.MenuSupplier<BagItemMenu> create(BagType type) {
         return (int containerId, Inventory inventory) -> new BagItemMenu(type, containerId, inventory);
     }
 
-    private BagItemMenu(BagOfHoldingItem.Type bagType, int containerId, Inventory inventory) {
-        this(bagType, containerId, inventory, new SimpleContainer(bagType.config().rows * 9));
+    private BagItemMenu(BagType bagType, int containerId, Inventory inventory) {
+        this(bagType, containerId, inventory, new SimpleContainer(bagType.getInventoryRows() * 9));
     }
 
-    public BagItemMenu(BagOfHoldingItem.Type bagType, int containerId, Inventory inventory, Container container) {
+    public BagItemMenu(BagType bagType, int containerId, Inventory inventory, Container container) {
         super(bagType.menuType(), containerId);
         this.bagType = bagType;
-        final int containerRows = bagType.config().rows;
+        int containerRows = bagType.getInventoryRows();
         checkContainerSize(container, containerRows * 9);
         this.container = container;
         container.startOpen(inventory.player);
@@ -57,13 +57,13 @@ public class BagItemMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player p_40199_, int p_40200_) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(p_40200_);
+        Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (p_40200_ < this.container.getContainerSize()) {
+            if (index < this.container.getContainerSize()) {
                 if (!this.moveItemStackTo(itemstack1, this.container.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
@@ -82,23 +82,23 @@ public class BagItemMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public void removed(Player p_40197_) {
-        super.removed(p_40197_);
-        this.container.stopOpen(p_40197_);
+    public void removed(Player player) {
+        super.removed(player);
+        this.container.stopOpen(player);
     }
 
-    public int getRowCount() {
-        return this.bagType.config().rows;
+    public int getInventoryRows() {
+        return this.bagType.getInventoryRows();
     }
 
     @Nullable
     public DyeColor getBackgroundColor() {
-        return this.bagType.backgroundColor;
+        return this.bagType.getBackgroundColor();
     }
 
     @Nullable
     public DyeColor getTextColor() {
-        return this.bagType.textColor;
+        return this.bagType.getTextColor();
     }
 
     public int getHotbarStartIndex() {

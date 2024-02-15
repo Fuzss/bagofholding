@@ -5,5 +5,5 @@ package fuzs.bagofholding.world.item;
  * (vanilla requires reference equivalence, otherwise the item is simply not moved when all other ingredients are).
  */
 public interface RecipesIgnoreTag {
-
+    // NO-OP
 }
