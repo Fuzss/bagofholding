@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "package": "fuzs.bagofholding.mixin",
+  "refmap": "bagofholding.refmap.json",
+  "plugin": "fuzs.bagofholding.mixin.ModMixinConfigPlugin",
+  "mixins": [
+    "PlayerMixin",
+    "ServerPlaceRecipeMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
