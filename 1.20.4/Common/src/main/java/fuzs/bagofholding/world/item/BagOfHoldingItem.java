@@ -6,7 +6,6 @@ import fuzs.bagofholding.network.S2CLockSlotMessage;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import fuzs.iteminteractions.api.v1.ContainerItemHelper;
-import fuzs.iteminteractions.api.v1.provider.ItemContainerProvider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +19,6 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -63,13 +61,12 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
         }
     }
 
-    private MenuProvider getMenuProvider(ItemStack stack) {
+    private MenuProvider getMenuProvider(ItemStack itemStack) {
         return new SimpleMenuProvider((containerId, inventory, player) -> {
-            ItemContainerProvider provider = ContainerItemHelper.INSTANCE.getItemContainerProvider(stack);
-            Objects.requireNonNull(provider, "provider is null");
-            SimpleContainer container = provider.getItemContainer(stack, player, true);
+            SimpleContainer container = ContainerItemHelper.INSTANCE.getItemContainerBehavior(itemStack)
+                    .getItemContainer(itemStack, player);
             return new BagItemMenu(this.type, containerId, inventory, container);
-        }, stack.getHoverName());
+        }, itemStack.getHoverName());
     }
 
     private void lockMySlot(Player player, ItemStack itemStack) {
@@ -86,10 +83,9 @@ public class BagOfHoldingItem extends Item implements Vanishable, RecipesIgnoreT
 
     @Override
     public void onDestroyed(ItemEntity itemEntity) {
-        ItemContainerProvider provider = ContainerItemHelper.INSTANCE.getItemContainerProvider(itemEntity.getItem());
-        Objects.requireNonNull(provider, "provider is null");
-        SimpleContainer container = provider.getItemContainer(itemEntity.getItem(), null, true);
-        Stream<ItemStack> stream = ContainerItemHelper.INSTANCE.getListFromContainer(container).stream().filter(Predicate.not(ItemStack::isEmpty));
+        SimpleContainer container = ContainerItemHelper.INSTANCE.getItemContainerBehavior(itemEntity.getItem())
+                .getItemContainer(itemEntity.getItem(), null);
+        Stream<ItemStack> stream = container.items.stream().filter(Predicate.not(ItemStack::isEmpty));
         ItemUtils.onContainerDestroyed(itemEntity, stream);
     }
 }

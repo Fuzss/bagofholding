@@ -1,6 +1,7 @@
-package fuzs.bagofholding.world.item;
+package fuzs.bagofholding.world.item.container;
 
 import com.google.gson.JsonObject;
+import fuzs.bagofholding.world.item.BagType;
 import fuzs.iteminteractions.api.v1.provider.SimpleItemProvider;
 import net.minecraft.world.item.ItemStack;
 
@@ -8,7 +9,7 @@ public class BagOfHoldingProvider extends SimpleItemProvider {
     private final BagType type;
 
     public BagOfHoldingProvider(BagType type) {
-        super(9, -1, type.getBackgroundColor());
+        super(9, 6, type.getBackgroundColor());
         this.type = type;
         this.filterContainerItems();
     }

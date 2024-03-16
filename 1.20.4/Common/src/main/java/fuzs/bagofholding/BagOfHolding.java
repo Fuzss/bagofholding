@@ -5,7 +5,7 @@ import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.handler.PerseveranceHandler;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.bagofholding.network.S2CLockSlotMessage;
-import fuzs.bagofholding.world.item.BagOfHoldingProvider;
+import fuzs.bagofholding.world.item.container.BagOfHoldingProvider;
 import fuzs.bagofholding.world.item.BagType;
 import fuzs.iteminteractions.api.v1.ItemContainerProviderSerializers;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;

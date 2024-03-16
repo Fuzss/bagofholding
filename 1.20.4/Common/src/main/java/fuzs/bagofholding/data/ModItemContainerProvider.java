@@ -1,7 +1,7 @@
 package fuzs.bagofholding.data;
 
 import fuzs.bagofholding.init.ModRegistry;
-import fuzs.bagofholding.world.item.BagOfHoldingProvider;
+import fuzs.bagofholding.world.item.container.BagOfHoldingProvider;
 import fuzs.bagofholding.world.item.BagType;
 import fuzs.iteminteractions.api.v1.data.AbstractItemContainerProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
