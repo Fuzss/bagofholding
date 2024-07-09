@@ -1,0 +1,16 @@
+apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/v2/common.gradle"
+
+dependencies {
+    // Puzzles Lib
+    modApi libs.puzzleslib.common
+
+    // Item Interactions
+    modApi libs.iteminteractions.common
+
+    // Extensible Enums
+    modApi libs.extensibleenums.common
+}
+
+tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {
+    targetNamespace = "named"
+}

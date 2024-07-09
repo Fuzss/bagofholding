@@ -1,0 +1,32 @@
+{
+  "type": "bagofholding:copy_tag_shaped_recipe",
+  "category": "equipment",
+  "copy_from": {
+    "item": "bagofholding:leather_bag_of_holding"
+  },
+  "key": {
+    "C": {
+      "item": "bagofholding:leather_bag_of_holding"
+    },
+    "G": {
+      "item": "minecraft:diamond"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "SGS",
+    "ICI",
+    "WIW"
+  ],
+  "result": {
+    "item": "bagofholding:iron_bag_of_holding"
+  }
+}
