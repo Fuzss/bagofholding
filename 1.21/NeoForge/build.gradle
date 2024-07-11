@@ -1,4 +1,4 @@
-apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/v2/neoforge.gradle"
+apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/${libs.versions.minecraft.get()}/neoforge.gradle"
 
 dependencies {
     // Puzzles Lib
@@ -6,7 +6,4 @@ dependencies {
 
     // Item Interactions
     modApi(include(libs.iteminteractions.neoforge.get()))
-
-    // Extensible Enums
-    modApi(include(libs.extensibleenums.neoforge.get()))
 }

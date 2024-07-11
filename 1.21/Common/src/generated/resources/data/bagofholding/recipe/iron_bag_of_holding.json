@@ -1,5 +1,5 @@
 {
-  "type": "bagofholding:copy_tag_shaped_recipe",
+  "type": "bagofholding:copy_components_shaped_recipe",
   "category": "equipment",
   "copy_from": {
     "item": "bagofholding:leather_bag_of_holding"
@@ -27,6 +27,7 @@
     "WIW"
   ],
   "result": {
-    "item": "bagofholding:iron_bag_of_holding"
+    "count": 1,
+    "id": "bagofholding:iron_bag_of_holding"
   }
 }

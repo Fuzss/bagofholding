@@ -1,4 +1,4 @@
-apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/v2/common.gradle"
+apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/${libs.versions.minecraft.get()}/common.gradle"
 
 dependencies {
     // Puzzles Lib
@@ -6,9 +6,6 @@ dependencies {
 
     // Item Interactions
     modApi libs.iteminteractions.common
-
-    // Extensible Enums
-    modApi libs.extensibleenums.common
 }
 
 tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {

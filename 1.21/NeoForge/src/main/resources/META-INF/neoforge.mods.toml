@@ -53,13 +53,5 @@ versionRange = "*"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${ modId }]]
-modId = "extensibleenums"
-mandatory = true
-type = "required"
-versionRange = "*"
-ordering = "NONE"
-side = "BOTH"
-
 [modproperties.${ modId }]
 catalogueImageIcon = "mod_logo.png"

@@ -1,0 +1,10 @@
+{
+  "type": "bagofholding:bag",
+  "background_color": "light_gray",
+  "bag_type": "iron",
+  "disallowed_item_contents": [],
+  "equipment_slots": "any",
+  "filter_container_items": true,
+  "interaction_permissions": "always",
+  "supported_items": "bagofholding:iron_bag_of_holding"
+}

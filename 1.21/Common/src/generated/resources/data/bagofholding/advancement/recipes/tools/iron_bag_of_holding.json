@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_bag_of_holding": {
+    "has_leather_bag_of_holding": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "bagofholding:iron_bag_of_holding"
-            ]
+            "items": "bagofholding:leather_bag_of_holding"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bagofholding:golden_bag_of_holding"
+        "recipe": "bagofholding:iron_bag_of_holding"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_bag_of_holding"
+      "has_leather_bag_of_holding"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bagofholding:golden_bag_of_holding"
+      "bagofholding:iron_bag_of_holding"
     ]
   }
 }

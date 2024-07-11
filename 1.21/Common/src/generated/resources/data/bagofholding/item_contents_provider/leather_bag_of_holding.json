@@ -1,0 +1,10 @@
+{
+  "type": "bagofholding:bag",
+  "background_color": "brown",
+  "bag_type": "leather",
+  "disallowed_item_contents": [],
+  "equipment_slots": "any",
+  "filter_container_items": true,
+  "interaction_permissions": "always",
+  "supported_items": "bagofholding:leather_bag_of_holding"
+}

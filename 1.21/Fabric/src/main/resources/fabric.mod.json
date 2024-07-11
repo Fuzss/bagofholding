@@ -40,7 +40,6 @@
     "fabric-api": ">=${minFabricApiVersion}",
     "puzzleslib": ">=${minPuzzlesVersion}",
     "iteminteractions": "*",
-    "extensibleenums": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
   }
