@@ -15,6 +15,6 @@ public class FilteredBagSlot extends Slot {
 
    @Override
    public boolean mayPlace(ItemStack itemStack) {
-      return this.behavior.isItemAllowedInContainer(ItemStack.EMPTY, itemStack);
+      return this.behavior.isItemAllowedInContainer(itemStack);
    }
 }
