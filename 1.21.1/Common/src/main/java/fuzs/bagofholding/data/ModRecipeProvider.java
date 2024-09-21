@@ -3,7 +3,7 @@ package fuzs.bagofholding.data;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v2.AbstractRecipeProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
-import fuzs.puzzleslib.api.data.v2.recipes.CopyTagShapedRecipeBuilder;
+import fuzs.puzzleslib.api.data.v2.recipes.CopyComponentsShapedRecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -29,7 +29,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .pattern("WIW")
                 .unlockedBy(getHasName(Blocks.CHEST), has(Blocks.CHEST))
                 .save(recipeOutput);
-        CopyTagShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value(), 1)
+        CopyComponentsShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value(), 1)
                 .define('C', ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value())
                 .define('S', Items.STRING)
                 .define('I', Items.IRON_INGOT)
@@ -39,19 +39,18 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .pattern("SGS")
                 .pattern("ICI")
                 .pattern("WIW")
-                .unlockedBy(getHasName(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value()), has(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value()))
+                .unlockedBy(getHasName(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value()),
+                        has(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value())
+                )
                 .save(recipeOutput);
-        CopyTagShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.value(), 1)
-                .define('C', ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value())
-                .define('S', Items.STRING)
-                .define('I', Items.GOLD_INGOT)
-                .define('G', Items.AMETHYST_SHARD)
-                .define('W', ItemTags.WOOL)
-                .copyFrom(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value())
-                .pattern("SGS")
-                .pattern("ICI")
-                .pattern("WIW")
-                .unlockedBy(getHasName(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value()), has(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value()))
-                .save(recipeOutput);
+        CopyComponentsShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.value(),
+                1
+        ).define('C', ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value()).define('S', Items.STRING).define('I',
+                Items.GOLD_INGOT
+        ).define('G', Items.AMETHYST_SHARD).define('W', ItemTags.WOOL).copyFrom(
+                ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value()).pattern("SGS").pattern("ICI").pattern("WIW").unlockedBy(
+                getHasName(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value()),
+                has(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value())
+        ).save(recipeOutput);
     }
 }
