@@ -1,0 +1,33 @@
+{
+  "type": "bagofholding:copy_components_shaped_recipe",
+  "category": "equipment",
+  "copy_from": {
+    "item": "bagofholding:iron_bag_of_holding"
+  },
+  "key": {
+    "C": {
+      "item": "bagofholding:iron_bag_of_holding"
+    },
+    "G": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "I": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "SGS",
+    "ICI",
+    "WIW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bagofholding:golden_bag_of_holding"
+  }
+}
