@@ -9,7 +9,7 @@ public class BagOfHoldingFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        FabricModRegistry.touch();
+        FabricModRegistry.bootstrap();
         ModConstructor.construct(BagOfHolding.MOD_ID, BagOfHolding::new);
     }
 }

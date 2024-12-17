@@ -9,6 +9,7 @@ import fuzs.puzzleslib.api.client.core.v1.ClientAbstractions;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -42,19 +43,39 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
         RenderSystem.setShaderColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0F);
         int leftPos = (this.width - this.imageWidth) / 2;
         int topPos = (this.height - this.imageHeight) / 2;
-        guiGraphics.blit(CONTAINER_BACKGROUND, leftPos, topPos, 0, 0, this.imageWidth, 17);
+        guiGraphics.blit(RenderType::guiTextured,
+                CONTAINER_BACKGROUND,
+                leftPos,
+                topPos,
+                0,
+                0,
+                this.imageWidth,
+                17,
+                256,
+                256);
         int inventoryHeight = this.menu.getInventoryHeight();
         for (int k = 0; k < (int) Math.ceil(inventoryHeight / 6.0); k++) {
-            guiGraphics.blit(CONTAINER_BACKGROUND,
+            guiGraphics.blit(RenderType::guiTextured,
+                    CONTAINER_BACKGROUND,
                     leftPos,
                     topPos + 17 + 18 * 6 * k,
                     0,
                     17,
                     this.imageWidth,
-                    Math.min(inventoryHeight - 6 * k, 6) * 18
-            );
+                    Math.min(inventoryHeight - 6 * k, 6) * 18,
+                    256,
+                    256);
         }
-        guiGraphics.blit(CONTAINER_BACKGROUND, leftPos, topPos + inventoryHeight * 18 + 17, 0, 126, this.imageWidth, 96);
+        guiGraphics.blit(RenderType::guiTextured,
+                CONTAINER_BACKGROUND,
+                leftPos,
+                topPos + inventoryHeight * 18 + 17,
+                0,
+                126,
+                this.imageWidth,
+                96,
+                256,
+                256);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
@@ -66,8 +87,7 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
                 this.inventoryLabelX,
                 this.inventoryLabelY,
                 0XFFFFFF,
-                false
-        );
+                false);
     }
 
     @Override
@@ -80,8 +100,7 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
             for (int i = 0; i < 9; ++i) {
                 if (ClientAbstractions.INSTANCE.isKeyActiveAndMatches(this.minecraft.options.keyHotbarSlots[i],
                         keyCode,
-                        scanCode
-                )) {
+                        scanCode)) {
                     if (this.menu.getSlot(this.menu.getHotbarStartIndex() + i) instanceof LockableInventorySlot slot &&
                             slot.locked()) {
                         return true;

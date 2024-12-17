@@ -1,8 +1,8 @@
-package fuzs.bagofholding.neoforge.data;
+package fuzs.bagofholding.data;
 
 import fuzs.bagofholding.init.ModRegistry;
-import fuzs.puzzleslib.neoforge.api.data.v2.AbstractBuiltInDataProvider;
-import fuzs.puzzleslib.neoforge.api.data.v2.core.NeoForgeDataProviderContext;
+import fuzs.puzzleslib.api.data.v2.AbstractRegistriesDatapackGenerator;
+import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -10,16 +10,16 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public class ModEnchantmentProvider extends AbstractBuiltInDataProvider.Enchantments {
+public class ModEnchantmentProvider extends AbstractRegistriesDatapackGenerator<Enchantment> {
 
-    public ModEnchantmentProvider(NeoForgeDataProviderContext context) {
-        super(context);
+    public ModEnchantmentProvider(DataProviderContext context) {
+        super(Registries.ENCHANTMENT, context);
     }
 
     @Override
-    protected void addBootstrap(BootstrapContext<Enchantment> context) {
+    public void addBootstrap(BootstrapContext<Enchantment> context) {
         HolderGetter<Item> items = context.lookup(Registries.ITEM);
-        register(context,
+        registerEnchantment(context,
                 ModRegistry.PRESERVATION_ENCHANTMENT,
                 Enchantment.enchantment(Enchantment.definition(items.getOrThrow(ModRegistry.BAGS_ITEM_TAG),
                         5,
@@ -27,8 +27,6 @@ public class ModEnchantmentProvider extends AbstractBuiltInDataProvider.Enchantm
                         Enchantment.dynamicCost(5, 8),
                         Enchantment.dynamicCost(55, 8),
                         2,
-                        EquipmentSlotGroup.ANY
-                ))
-        );
+                        EquipmentSlotGroup.ANY)));
     }
 }

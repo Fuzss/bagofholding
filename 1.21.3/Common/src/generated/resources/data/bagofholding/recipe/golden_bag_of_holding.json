@@ -1,25 +1,13 @@
 {
-  "type": "bagofholding:copy_components_shaped_recipe",
+  "type": "bagofholding:crafting_transmute_shaped",
   "category": "equipment",
-  "copy_from": {
-    "item": "bagofholding:iron_bag_of_holding"
-  },
+  "input": "bagofholding:iron_bag_of_holding",
   "key": {
-    "C": {
-      "item": "bagofholding:iron_bag_of_holding"
-    },
-    "G": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "I": {
-      "item": "minecraft:gold_ingot"
-    },
-    "S": {
-      "item": "minecraft:string"
-    },
-    "W": {
-      "tag": "minecraft:wool"
-    }
+    "C": "bagofholding:iron_bag_of_holding",
+    "G": "minecraft:amethyst_shard",
+    "I": "minecraft:gold_ingot",
+    "S": "minecraft:string",
+    "W": "#minecraft:wool"
   },
   "pattern": [
     "SGS",

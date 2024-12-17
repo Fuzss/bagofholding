@@ -1,5 +1,6 @@
 package fuzs.bagofholding;
 
+import fuzs.bagofholding.attachment.SoulboundItems;
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.config.ServerConfig;
 import fuzs.bagofholding.init.ModRegistry;
@@ -9,6 +10,7 @@ import fuzs.puzzleslib.api.core.v1.ContentRegistrationFlags;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import fuzs.puzzleslib.api.event.v1.entity.living.LivingDropsCallback;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerCopyEvents;
 import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
 import fuzs.puzzleslib.api.network.v3.NetworkHandler;
@@ -30,14 +32,13 @@ public class BagOfHolding implements ModConstructor {
 
     @Override
     public void onConstructMod() {
-        ModRegistry.touch();
+        ModRegistry.bootstrap();
         registerEventHandlers();
     }
 
     private static void registerEventHandlers() {
-        PlayerCopyEvents.COPY.register((originalPlayer, newPlayer, alive) -> {
-            if (!alive) ModRegistry.BAG_PERSEVERANCE_CAPABILITY.get(originalPlayer).restoreAfterRespawn(newPlayer);
-        });
+        PlayerCopyEvents.COPY.register(SoulboundItems::onCopy);
+        LivingDropsCallback.EVENT.register(SoulboundItems::onLivingDrops);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class BagOfHolding implements ModConstructor {
 
     @Override
     public ContentRegistrationFlags[] getContentRegistrationFlags() {
-        return new ContentRegistrationFlags[]{ContentRegistrationFlags.COPY_RECIPES};
+        return new ContentRegistrationFlags[]{ContentRegistrationFlags.CRAFTING_TRANSMUTE};
     }
 
     public static ResourceLocation id(String path) {

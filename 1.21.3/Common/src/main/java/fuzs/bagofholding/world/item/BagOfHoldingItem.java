@@ -7,6 +7,7 @@ import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import fuzs.iteminteractions.api.v1.ItemContentsHelper;
 import fuzs.iteminteractions.api.v1.provider.ItemContentsBehavior;
+import fuzs.puzzleslib.api.util.v1.InteractionResultHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,22 +34,12 @@ public class BagOfHoldingItem extends Item {
     }
 
     @Override
-    public boolean isEnchantable(ItemStack itemStack) {
-        return itemStack.getCount() == 1;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 1;
-    }
-
-    @Override
     public boolean canFitInsideContainerItems() {
         return false;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         if (player.isSecondaryUseActive() || !BagOfHolding.CONFIG.get(ServerConfig.class).sneakToOpenBag) {
             ItemStack itemInHand = player.getItemInHand(interactionHand);
             if (!level.isClientSide) {
@@ -57,7 +48,7 @@ public class BagOfHoldingItem extends Item {
                 this.lockMySlot(player, itemInHand);
             }
             player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + level.getRandom().nextFloat() * 0.4F);
-            return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide);
+            return InteractionResultHelper.sidedSuccess(itemInHand, level.isClientSide);
         } else {
             return super.use(level, player, interactionHand);
         }
@@ -78,8 +69,7 @@ public class BagOfHoldingItem extends Item {
             if (items.get(i) == itemStack) {
                 ((LockableInventorySlot) menu.getSlot(i)).lock();
                 BagOfHolding.NETWORK.sendTo((ServerPlayer) player,
-                        new S2CLockSlotMessage(menu.containerId, i).toClientboundMessage()
-                );
+                        new S2CLockSlotMessage(menu.containerId, i).toClientboundMessage());
                 return;
             }
         }

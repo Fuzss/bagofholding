@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "C": {
-      "item": "minecraft:chest"
-    },
-    "I": {
-      "item": "minecraft:leather"
-    },
-    "S": {
-      "item": "minecraft:string"
-    },
-    "W": {
-      "tag": "minecraft:wool"
-    }
+    "C": "minecraft:chest",
+    "I": "minecraft:leather",
+    "S": "minecraft:string",
+    "W": "#minecraft:wool"
   },
   "pattern": [
     "SIS",

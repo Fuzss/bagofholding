@@ -1,7 +1,7 @@
-// 1.21	2024-07-09T15:46:09.536605	Recipes
+// 1.21.3	2024-12-17T15:15:19.791962	Recipes
 048901eb34903d597c7ace82f0f0cdaf80d7413b data/bagofholding/advancement/recipes/tools/golden_bag_of_holding.json
 29208d5199ef4fae1450f2afb3d58a112af3a925 data/bagofholding/advancement/recipes/tools/iron_bag_of_holding.json
 164430ca9b0cf92f5038d91b53d70bcdbee2df06 data/bagofholding/advancement/recipes/tools/leather_bag_of_holding.json
-f685a022091c29c691e8dfcf801033b82c71090e data/bagofholding/recipe/golden_bag_of_holding.json
-3896f705854dc5295208759ab28eb032b67937f3 data/bagofholding/recipe/iron_bag_of_holding.json
-8de7e671cd4fac4892759633e5948ab7a50d6a52 data/bagofholding/recipe/leather_bag_of_holding.json
+0e8d02d6eab1c4d575d89a594364dfb59bf7996c data/bagofholding/recipe/golden_bag_of_holding.json
+9b56b0974767a6cda9c71b6576b191750116a07e data/bagofholding/recipe/iron_bag_of_holding.json
+9cfcab3bff60cb749d4cd9318c66df21938e1880 data/bagofholding/recipe/leather_bag_of_holding.json
