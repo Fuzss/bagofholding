@@ -1,8 +1,10 @@
 package fuzs.bagofholding.client;
 
+import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.client.gui.screens.inventory.BagItemScreen;
 import fuzs.bagofholding.client.handler.SlotOverlayHandler;
 import fuzs.bagofholding.init.ModRegistry;
+import fuzs.puzzleslib.api.client.core.v1.ClientAbstractions;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.MenuScreensContext;
 import fuzs.puzzleslib.api.client.event.v1.gui.ContainerScreenEvents;
@@ -11,10 +13,11 @@ public class BagOfHoldingClient implements ClientModConstructor {
 
     @Override
     public void onConstructMod() {
-        registerHandlers();
+        ClientAbstractions.INSTANCE.registerConfigScreenFactory(BagOfHolding.MOD_ID, new String[]{"iteminteractions"});
+        registerEventHandlers();
     }
 
-    private static void registerHandlers() {
+    private static void registerEventHandlers() {
         ContainerScreenEvents.FOREGROUND.register(SlotOverlayHandler::onDrawForeground);
     }
 
