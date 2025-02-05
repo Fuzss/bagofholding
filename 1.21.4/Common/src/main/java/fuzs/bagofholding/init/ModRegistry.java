@@ -8,6 +8,7 @@ import fuzs.iteminteractions.api.v1.provider.ItemContentsProvider;
 import fuzs.puzzleslib.api.attachment.v4.DataAttachmentRegistry;
 import fuzs.puzzleslib.api.attachment.v4.DataAttachmentType;
 import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
+import fuzs.puzzleslib.api.init.v3.registry.TransmuteRecipeHelper;
 import fuzs.puzzleslib.api.init.v3.tags.TagFactory;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +16,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -35,6 +37,8 @@ public class ModRegistry {
     public static final Holder.Reference<MenuType<BagItemMenu>> GOLDEN_BAG_OF_HOLDING_MENU_TYPE = REGISTRIES.registerMenuType(
             "golden_bag_of_holding",
             BagItemMenu::createGoldenBagMenu);
+    public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab(
+            GOLDEN_BAG_OF_HOLDING_ITEM);
     public static final ResourceKey<Enchantment> PRESERVATION_ENCHANTMENT = REGISTRIES.registerEnchantment(
             "preservation");
     public static final Holder.Reference<ItemContentsProvider.Type> BAG_ITEM_CONTENTS_PROVIDER_TYPE = REGISTRIES.register(
@@ -52,6 +56,6 @@ public class ModRegistry {
             .build(BagOfHolding.id("soulbound_items"));
 
     public static void bootstrap() {
-        // NO-OP
+        TransmuteRecipeHelper.registerTransmuteRecipeSerializers(REGISTRIES);
     }
 }

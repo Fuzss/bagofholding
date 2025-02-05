@@ -1,7 +1,7 @@
 package fuzs.bagofholding.neoforge;
 
 import fuzs.bagofholding.BagOfHolding;
-import fuzs.bagofholding.data.ModEnchantmentProvider;
+import fuzs.bagofholding.data.ModDatapackRegistriesProvider;
 import fuzs.bagofholding.data.ModItemContentsProvider;
 import fuzs.bagofholding.data.ModItemTagProvider;
 import fuzs.bagofholding.data.ModRecipeProvider;
@@ -20,6 +20,6 @@ public class BagOfHoldingNeoForge {
                 ModItemContentsProvider::new,
                 ModRecipeProvider::new,
                 ModItemTagProvider::new,
-                ModEnchantmentProvider::new);
+                ModDatapackRegistriesProvider::new);
     }
 }
