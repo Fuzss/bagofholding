@@ -1,0 +1,4 @@
+// 1.21.4	2025-02-05T11:21:20.351372	Tags for minecraft:item mod id vanilla
+15d96732f056148b2fecd92dfbc4fce91972421a data/bagofholding/tags/item/bags.json
+db8b59bc957506aa1c91ae198897e8e86c2abe62 data/bagofholding/tags/item/recipes_ignore_components.json
+db8b59bc957506aa1c91ae198897e8e86c2abe62 data/minecraft/tags/item/enchantable/vanishing.json
