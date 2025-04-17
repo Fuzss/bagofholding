@@ -20,10 +20,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
 
     @Override
     public void addRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(this.items(),
-                        RecipeCategory.TOOLS,
-                        ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value(),
-                        1)
+        ShapedRecipeBuilder.shaped(this.items(), RecipeCategory.TOOLS, ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value())
                 .define('C', Blocks.CHEST)
                 .define('S', Items.STRING)
                 .define('I', Items.LEATHER)
@@ -37,8 +34,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
         TransmuteShapedRecipeBuilder.shaped(recipeSerializer,
                         this.items(),
                         RecipeCategory.TOOLS,
-                        ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value(),
-                        1)
+                        ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value())
                 .define('C', ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value())
                 .define('S', Items.STRING)
                 .define('I', Items.IRON_INGOT)
@@ -54,8 +50,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
         TransmuteShapedRecipeBuilder.shaped(recipeSerializer,
                         this.items(),
                         RecipeCategory.TOOLS,
-                        ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.value(),
-                        1)
+                        ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.value())
                 .define('C', ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value())
                 .define('S', Items.STRING)
                 .define('I', Items.GOLD_INGOT)

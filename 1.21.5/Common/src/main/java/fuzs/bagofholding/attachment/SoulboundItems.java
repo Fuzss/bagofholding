@@ -1,18 +1,15 @@
 package fuzs.bagofholding.attachment;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.puzzleslib.api.event.v1.core.EventResult;
 import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.arguments.item.ItemInput;
+import fuzs.puzzleslib.api.item.v2.GiveItemHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.server.commands.GiveCommand;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -69,22 +66,10 @@ public record SoulboundItems(List<ItemStack> items) {
 
     public static void onCopy(ServerPlayer originalPlayer, ServerPlayer newPlayer, boolean originalStillAlive) {
         if (!originalStillAlive) {
-            ModRegistry.SOULBOUND_ITEMS_ATTACHMENT_TYPE.getOrDefault(originalPlayer, EMPTY)
-                    .restoreAfterRespawn(newPlayer);
-        }
-    }
-
-    public void restoreAfterRespawn(ServerPlayer serverPlayer) {
-        CommandSourceStack commandSource = CommandSourceHelper.createEmptyCommandSource(serverPlayer.serverLevel());
-        for (ItemStack itemStack : this.items) {
-            ItemInput itemInput = new ItemInput(itemStack.getItemHolder(), itemStack.getComponentsPatch());
-            try {
-                GiveCommand.giveItem(commandSource,
-                        itemInput,
-                        Collections.singletonList(serverPlayer),
-                        itemStack.getCount());
-            } catch (CommandSyntaxException exception) {
-                // NO-OP
+            SoulboundItems soulboundItems = ModRegistry.SOULBOUND_ITEMS_ATTACHMENT_TYPE.getOrDefault(originalPlayer,
+                    EMPTY);
+            for (ItemStack itemStack : soulboundItems.items) {
+                GiveItemHelper.giveItem(itemStack, newPlayer);
             }
         }
     }

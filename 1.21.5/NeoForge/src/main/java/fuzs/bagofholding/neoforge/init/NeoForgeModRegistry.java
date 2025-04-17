@@ -25,9 +25,9 @@ public class NeoForgeModRegistry {
         // NO-OP
     }
 
-    private static Holder.Reference<Item> registerBagOfHolding(String path, Supplier<Holder<MenuType<BagItemMenu>>> supplier) {
+    static Holder.Reference<Item> registerBagOfHolding(String path, Supplier<Holder<MenuType<BagItemMenu>>> supplier) {
         return REGISTRIES.registerItem(path,
                 (Item.Properties properties) -> new NeoForgeBagOfHoldingItem(properties, supplier.get()),
-                () -> new Item.Properties().stacksTo(1).enchantable(1));
+                ModRegistry::bagOfHoldingProperties);
     }
 }

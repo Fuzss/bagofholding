@@ -2,11 +2,13 @@ package fuzs.bagofholding.world.item;
 
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.config.ServerConfig;
-import fuzs.bagofholding.network.S2CLockSlotMessage;
+import fuzs.bagofholding.network.ClientboundLockSlotMessage;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import fuzs.iteminteractions.api.v1.ItemContentsHelper;
 import fuzs.iteminteractions.api.v1.provider.ItemContentsBehavior;
+import fuzs.puzzleslib.api.network.v4.MessageSender;
+import fuzs.puzzleslib.api.network.v4.PlayerSet;
 import fuzs.puzzleslib.api.util.v1.InteractionResultHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
@@ -45,7 +47,7 @@ public class BagOfHoldingItem extends Item {
             if (!level.isClientSide) {
                 player.openMenu(this.getMenuProvider(itemInHand));
                 player.awardStat(Stats.ITEM_USED.get(this));
-                this.lockMySlot(player, itemInHand);
+                this.lockMySlot((ServerPlayer) player, itemInHand);
             }
             player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + level.getRandom().nextFloat() * 0.4F);
             return InteractionResultHelper.sidedSuccess(itemInHand, level.isClientSide);
@@ -62,15 +64,23 @@ public class BagOfHoldingItem extends Item {
         }, itemStack.getHoverName());
     }
 
-    private void lockMySlot(Player player, ItemStack itemStack) {
-        if (!(player.containerMenu instanceof BagItemMenu menu)) return;
-        NonNullList<ItemStack> items = menu.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i) == itemStack) {
-                ((LockableInventorySlot) menu.getSlot(i)).lock();
-                BagOfHolding.NETWORK.sendTo((ServerPlayer) player,
-                        new S2CLockSlotMessage(menu.containerId, i).toClientboundMessage());
-                return;
+    private void lockMySlot(ServerPlayer serverPlayer, ItemStack itemStack) {
+        if (serverPlayer.containerMenu instanceof BagItemMenu menu) {
+            NonNullList<ItemStack> items = menu.getItems();
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i) == itemStack) {
+                    if (menu.getSlot(i) instanceof LockableInventorySlot slot) {
+                        slot.lock();
+                        MessageSender.broadcast(PlayerSet.ofPlayer(serverPlayer),
+                                new ClientboundLockSlotMessage(menu.containerId, i));
+                    } else {
+                        BagOfHolding.LOGGER.warn("Unable to lock bag slot at {} in container {} containing {}",
+                                i,
+                                menu,
+                                itemStack);
+                    }
+                    break;
+                }
             }
         }
     }

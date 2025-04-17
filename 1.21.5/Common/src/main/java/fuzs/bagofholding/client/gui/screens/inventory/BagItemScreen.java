@@ -5,7 +5,7 @@ import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
-import fuzs.puzzleslib.api.client.core.v1.ClientAbstractions;
+import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -98,7 +98,7 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
         // also the hotbar slot has a varying index as the player inventory is always added last, so we store the first hotbar slot during menu construction
         if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null) {
             for (int i = 0; i < 9; ++i) {
-                if (ClientAbstractions.INSTANCE.isKeyActiveAndMatches(this.minecraft.options.keyHotbarSlots[i],
+                if (KeyMappingHelper.isKeyActiveAndMatches(this.minecraft.options.keyHotbarSlots[i],
                         keyCode,
                         scanCode)) {
                     if (this.menu.getSlot(this.menu.getHotbarStartIndex() + i) instanceof LockableInventorySlot slot &&
