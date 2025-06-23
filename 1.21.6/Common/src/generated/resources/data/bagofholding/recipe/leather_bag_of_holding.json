@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "minecraft:chest",
+    "I": "minecraft:leather",
+    "S": "minecraft:string",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "SIS",
+    "ICI",
+    "WIW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bagofholding:leather_bag_of_holding"
+  }
+}

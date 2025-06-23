@@ -1,0 +1,21 @@
+{
+  "type": "bagofholding:crafting_transmute_shaped",
+  "category": "equipment",
+  "input": "bagofholding:iron_bag_of_holding",
+  "key": {
+    "C": "bagofholding:iron_bag_of_holding",
+    "G": "minecraft:amethyst_shard",
+    "I": "minecraft:gold_ingot",
+    "S": "minecraft:string",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "SGS",
+    "ICI",
+    "WIW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bagofholding:golden_bag_of_holding"
+  }
+}
