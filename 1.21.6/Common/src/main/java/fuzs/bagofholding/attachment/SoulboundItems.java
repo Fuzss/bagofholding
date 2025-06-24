@@ -3,7 +3,7 @@ package fuzs.bagofholding.attachment;
 import com.mojang.serialization.Codec;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.puzzleslib.api.event.v1.core.EventResult;
-import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
+import fuzs.puzzleslib.api.item.v2.EnchantingHelper;
 import fuzs.puzzleslib.api.item.v2.GiveItemHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
@@ -39,8 +39,7 @@ public record SoulboundItems(List<ItemStack> items) {
     }
 
     public static SoulboundItems saveOnDeath(ServerPlayer serverPlayer, Collection<ItemEntity> drops) {
-        Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(serverPlayer,
-                ModRegistry.PRESERVATION_ENCHANTMENT);
+        Holder<Enchantment> enchantment = EnchantingHelper.lookup(serverPlayer, ModRegistry.PRESERVATION_ENCHANTMENT);
         List<ItemStack> items = drops.stream()
                 .filter((ItemEntity itemEntity) -> {
                     return EnchantmentHelper.getItemEnchantmentLevel(enchantment, itemEntity.getItem()) > 0;

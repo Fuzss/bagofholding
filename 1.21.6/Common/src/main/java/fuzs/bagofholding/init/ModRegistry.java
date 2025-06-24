@@ -40,13 +40,13 @@ public class ModRegistry {
             "golden_bag_of_holding");
     public static final Holder.Reference<MenuType<BagItemMenu>> LEATHER_BAG_OF_HOLDING_MENU_TYPE = REGISTRIES.registerMenuType(
             "leather_bag_of_holding",
-            BagItemMenu::createLeatherBagMenu);
+            BagItemMenu.createLeatherBagMenu());
     public static final Holder.Reference<MenuType<BagItemMenu>> IRON_BAG_OF_HOLDING_MENU_TYPE = REGISTRIES.registerMenuType(
             "iron_bag_of_holding",
-            BagItemMenu::createIronBagMenu);
+            BagItemMenu.createIronBagMenu());
     public static final Holder.Reference<MenuType<BagItemMenu>> GOLDEN_BAG_OF_HOLDING_MENU_TYPE = REGISTRIES.registerMenuType(
             "golden_bag_of_holding",
-            BagItemMenu::createGoldenBagMenu);
+            BagItemMenu.createGoldenBagMenu());
     public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab(
             GOLDEN_BAG_OF_HOLDING_ITEM);
     public static final ResourceKey<Enchantment> PRESERVATION_ENCHANTMENT = REGISTRIES.registerEnchantment(

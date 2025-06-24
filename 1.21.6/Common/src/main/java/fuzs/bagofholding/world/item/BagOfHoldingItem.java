@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -57,7 +58,7 @@ public class BagOfHoldingItem extends Item {
     }
 
     private MenuProvider getMenuProvider(ItemStack itemStack) {
-        return new SimpleMenuProvider((containerId, inventory, player) -> {
+        return new SimpleMenuProvider((int containerId, Inventory inventory, Player player) -> {
             ItemContentsBehavior behavior = ItemContentsHelper.getItemContentsBehavior(itemStack);
             SimpleContainer itemContainer = behavior.getItemContainer(itemStack, player);
             return new BagItemMenu(this.menuType, behavior, containerId, inventory, itemContainer);

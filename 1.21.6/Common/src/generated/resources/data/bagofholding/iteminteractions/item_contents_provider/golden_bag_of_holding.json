@@ -2,7 +2,6 @@
   "type": "bagofholding:bag",
   "background_color": "yellow",
   "bag_type": "golden",
-  "disallowed_item_contents": [],
   "equipment_slots": "any",
   "filter_container_items": true,
   "interaction_permissions": "always",

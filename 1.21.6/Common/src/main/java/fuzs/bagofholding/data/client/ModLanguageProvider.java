@@ -17,8 +17,8 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         builder.add(ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM.value(), "Leather Bag of Holding");
         builder.add(ModRegistry.IRON_BAG_OF_HOLDING_ITEM.value(), "Iron Bag of Holding");
         builder.add(ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM.value(), "Golden Bag of Holding");
-        builder.addEnchantment(ModRegistry.PRESERVATION_ENCHANTMENT, "Preservation");
-        builder.addEnchantment(ModRegistry.PRESERVATION_ENCHANTMENT,
+        builder.add(ModRegistry.PRESERVATION_ENCHANTMENT, "Preservation");
+        builder.add(ModRegistry.PRESERVATION_ENCHANTMENT,
                 "desc",
                 "Prevents a bag of holding from being lost on death. The enchantment level is reduced by one each time.");
         builder.add(ModRegistry.BAGS_ITEM_TAG, "Bags");

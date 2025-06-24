@@ -8,9 +8,7 @@ import fuzs.bagofholding.init.ModRegistry;
 import fuzs.bagofholding.world.item.BagType;
 import fuzs.iteminteractions.api.v1.DyeBackedColor;
 import fuzs.iteminteractions.api.v1.provider.impl.ContainerProvider;
-import net.minecraft.core.HolderSet;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -19,19 +17,17 @@ public class BagProvider extends ContainerProvider {
     public static final MapCodec<BagProvider> CODEC = RecordCodecBuilder.mapCodec(instance -> {
         return instance.group(BagType.CODEC.fieldOf("bag_type").forGetter(provider -> provider.bagType),
                         backgroundColorCodec(),
-                        disallowedItemsCodec(),
+                        itemContentsCodec(),
                         filterContainerItemsCodec(),
                         interactionPermissionsCodec(),
-                        equipmentSlotsCodec()
-                )
+                        equipmentSlotsCodec())
                 .apply(instance,
-                        (BagType bagType, Optional<DyeBackedColor> dyeColor, HolderSet<Item> disallowedItems, Boolean filterContainerItems, InteractionPermissions interactionPermissions, EquipmentSlotGroup equipmentSlots) -> {
-                            return new BagProvider(bagType, dyeColor.orElse(null)).disallowedItems(disallowedItems)
+                        (BagType bagType, Optional<DyeBackedColor> dyeColor, ItemContents itemContents, Boolean filterContainerItems, InteractionPermissions interactionPermissions, EquipmentSlotGroup equipmentSlots) -> {
+                            return new BagProvider(bagType, dyeColor.orElse(null)).itemContents(itemContents)
                                     .filterContainerItems(filterContainerItems)
                                     .interactionPermissions(interactionPermissions)
                                     .equipmentSlots(equipmentSlots);
-                        }
-                );
+                        });
     });
 
     private final BagType bagType;
@@ -42,8 +38,8 @@ public class BagProvider extends ContainerProvider {
     }
 
     @Override
-    public BagProvider disallowedItems(HolderSet<Item> disallowedItems) {
-        return (BagProvider) super.disallowedItems(disallowedItems);
+    protected BagProvider itemContents(ItemContents itemContents) {
+        return (BagProvider) super.itemContents(itemContents);
     }
 
     @Override
@@ -62,7 +58,7 @@ public class BagProvider extends ContainerProvider {
     }
 
     @Override
-    public float[] getBackgroundColor() {
+    public int getBackgroundColor() {
         return super.getBackgroundColor();
     }
 

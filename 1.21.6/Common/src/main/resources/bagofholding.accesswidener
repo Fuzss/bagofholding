@@ -1,1 +1,5 @@
 accessWidener   v2  named
+accessible  field   net/minecraft/client/gui/screens/inventory/AbstractContainerScreen  SLOT_HIGHLIGHT_BACK_SPRITE  Lnet/minecraft/resources/ResourceLocation;
+accessible  field   net/minecraft/client/gui/screens/inventory/AbstractContainerScreen  SLOT_HIGHLIGHT_FRONT_SPRITE Lnet/minecraft/resources/ResourceLocation;
+extendable  method  net/minecraft/client/gui/screens/inventory/AbstractContainerScreen  renderSlotHighlightBack (Lnet/minecraft/client/gui/GuiGraphics;)V
+extendable  method  net/minecraft/client/gui/screens/inventory/AbstractContainerScreen  renderSlotHighlightFront    (Lnet/minecraft/client/gui/GuiGraphics;)V

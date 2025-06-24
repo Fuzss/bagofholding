@@ -128,7 +128,7 @@ public class BagItemMenu extends AbstractContainerMenu {
         return ((BagProvider) this.behavior.provider()).getInventoryHeight();
     }
 
-    public float[] getBackgroundColor() {
+    public int getBackgroundColor() {
         return ((BagProvider) this.behavior.provider()).getBackgroundColor();
     }
 

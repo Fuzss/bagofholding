@@ -1,5 +1,6 @@
 package fuzs.bagofholding.data;
 
+import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v2.AbstractRecipeProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
@@ -30,7 +31,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .pattern("WIW")
                 .unlockedBy(getHasName(Blocks.CHEST), this.has(Blocks.CHEST))
                 .save(recipeOutput);
-        RecipeSerializer<?> recipeSerializer = TransmuteShapedRecipeBuilder.getRecipeSerializer(this.modId);
+        RecipeSerializer<?> recipeSerializer = TransmuteShapedRecipeBuilder.getRecipeSerializer(BagOfHolding.MOD_ID);
         TransmuteShapedRecipeBuilder.shaped(recipeSerializer,
                         this.items(),
                         RecipeCategory.TOOLS,

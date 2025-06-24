@@ -1,6 +1,5 @@
 package fuzs.bagofholding.client.gui.screens.inventory;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
@@ -9,7 +8,7 @@ import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,7 +17,6 @@ import net.minecraft.world.inventory.Slot;
 public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = ResourceLocationHelper.withDefaultNamespace(
             "textures/gui/container/generic_54.png");
-    private static final float[] DEFAULT_BACKGROUND_COLOR = {1.0F, 1.0F, 1.0F};
 
     public BagItemScreen(BagItemMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -33,17 +31,38 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        float[] backgroundColor;
-        if (BagOfHolding.CONFIG.get(ClientConfig.class).colorfulMenuBackgrounds) {
-            backgroundColor = this.menu.getBackgroundColor();
-        } else {
-            backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    protected void renderSlotHighlightBack(GuiGraphics guiGraphics) {
+        super.renderSlotHighlightBack(guiGraphics);
+        this.renderLockableSlotHighlight(guiGraphics, SLOT_HIGHLIGHT_BACK_SPRITE);
+    }
+
+    @Override
+    protected void renderSlotHighlightFront(GuiGraphics guiGraphics) {
+        super.renderSlotHighlightFront(guiGraphics);
+        this.renderLockableSlotHighlight(guiGraphics, SLOT_HIGHLIGHT_FRONT_SPRITE);
+    }
+
+    private void renderLockableSlotHighlight(GuiGraphics guiGraphics, ResourceLocation resourceLocation) {
+        for (Slot slot : this.menu.slots) {
+            if (slot != this.hoveredSlot && slot.isHighlightable()) {
+                if (slot instanceof LockableInventorySlot lockableSlot && lockableSlot.locked()) {
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+                            resourceLocation,
+                            slot.x - 4,
+                            slot.y - 4,
+                            24,
+                            24);
+                }
+            }
         }
-        RenderSystem.setShaderColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0F);
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+        int backgroundColor = this.getBackgroundColor();
         int leftPos = (this.width - this.imageWidth) / 2;
         int topPos = (this.height - this.imageHeight) / 2;
-        guiGraphics.blit(RenderType::guiTextured,
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 CONTAINER_BACKGROUND,
                 leftPos,
                 topPos,
@@ -52,10 +71,11 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
                 this.imageWidth,
                 17,
                 256,
-                256);
+                256,
+                backgroundColor);
         int inventoryHeight = this.menu.getInventoryHeight();
         for (int k = 0; k < (int) Math.ceil(inventoryHeight / 6.0); k++) {
-            guiGraphics.blit(RenderType::guiTextured,
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                     CONTAINER_BACKGROUND,
                     leftPos,
                     topPos + 17 + 18 * 6 * k,
@@ -64,9 +84,10 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
                     this.imageWidth,
                     Math.min(inventoryHeight - 6 * k, 6) * 18,
                     256,
-                    256);
+                    256,
+                    backgroundColor);
         }
-        guiGraphics.blit(RenderType::guiTextured,
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 CONTAINER_BACKGROUND,
                 leftPos,
                 topPos + inventoryHeight * 18 + 17,
@@ -75,18 +96,26 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
                 this.imageWidth,
                 96,
                 256,
-                256);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                256,
+                backgroundColor);
+    }
+
+    private int getBackgroundColor() {
+        if (BagOfHolding.CONFIG.get(ClientConfig.class).colorfulMenuBackgrounds) {
+            return this.menu.getBackgroundColor();
+        } else {
+            return -1;
+        }
     }
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0XFFFFFF, false);
+        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, -1, false);
         guiGraphics.drawString(this.font,
                 this.playerInventoryTitle,
                 this.inventoryLabelX,
                 this.inventoryLabelY,
-                0XFFFFFF,
+                -1,
                 false);
     }
 
@@ -101,8 +130,8 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
                 if (KeyMappingHelper.isKeyActiveAndMatches(this.minecraft.options.keyHotbarSlots[i],
                         keyCode,
                         scanCode)) {
-                    if (this.menu.getSlot(this.menu.getHotbarStartIndex() + i) instanceof LockableInventorySlot slot &&
-                            slot.locked()) {
+                    if (this.menu.getSlot(this.menu.getHotbarStartIndex() + i) instanceof LockableInventorySlot slot
+                            && slot.locked()) {
                         return true;
                     }
                 }
