@@ -57,9 +57,8 @@ public class BagProvider extends ContainerProvider {
         return (BagProvider) super.equipmentSlots(equipmentSlots);
     }
 
-    @Override
-    public int getBackgroundColor() {
-        return super.getBackgroundColor();
+    public @Nullable DyeBackedColor getBackgroundColor() {
+        return this.dyeColor;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fuzs.bagofholding.world.inventory;
 
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.bagofholding.world.item.container.BagProvider;
+import fuzs.iteminteractions.api.v1.DyeBackedColor;
 import fuzs.iteminteractions.api.v1.ItemContentsHelper;
 import fuzs.iteminteractions.api.v1.provider.ItemContentsBehavior;
 import net.minecraft.core.Holder;
@@ -14,6 +15,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 public class BagItemMenu extends AbstractContainerMenu {
     private final Container container;
@@ -128,7 +130,7 @@ public class BagItemMenu extends AbstractContainerMenu {
         return ((BagProvider) this.behavior.provider()).getInventoryHeight();
     }
 
-    public int getBackgroundColor() {
+    public @Nullable DyeBackedColor getBackgroundColor() {
         return ((BagProvider) this.behavior.provider()).getBackgroundColor();
     }
 

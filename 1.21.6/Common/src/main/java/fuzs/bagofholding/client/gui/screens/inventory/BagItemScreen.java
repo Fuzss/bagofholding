@@ -4,6 +4,7 @@ import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.config.ClientConfig;
 import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
+import fuzs.iteminteractions.api.v1.client.tooltip.AbstractClientItemContentsTooltip;
 import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.gui.GuiGraphics;
@@ -102,7 +103,7 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
 
     private int getBackgroundColor() {
         if (BagOfHolding.CONFIG.get(ClientConfig.class).colorfulMenuBackgrounds) {
-            return this.menu.getBackgroundColor();
+            return AbstractClientItemContentsTooltip.getBackgroundColor(this.menu.getBackgroundColor());
         } else {
             return -1;
         }
