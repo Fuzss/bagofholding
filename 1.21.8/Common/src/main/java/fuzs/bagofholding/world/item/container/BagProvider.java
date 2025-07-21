@@ -18,13 +18,11 @@ public class BagProvider extends ContainerProvider {
         return instance.group(BagType.CODEC.fieldOf("bag_type").forGetter(provider -> provider.bagType),
                         backgroundColorCodec(),
                         itemContentsCodec(),
-                        filterContainerItemsCodec(),
                         interactionPermissionsCodec(),
                         equipmentSlotsCodec())
                 .apply(instance,
-                        (BagType bagType, Optional<DyeBackedColor> dyeColor, ItemContents itemContents, Boolean filterContainerItems, InteractionPermissions interactionPermissions, EquipmentSlotGroup equipmentSlots) -> {
+                        (BagType bagType, Optional<DyeBackedColor> dyeColor, ItemContents itemContents, InteractionPermissions interactionPermissions, EquipmentSlotGroup equipmentSlots) -> {
                             return new BagProvider(bagType, dyeColor.orElse(null)).itemContents(itemContents)
-                                    .filterContainerItems(filterContainerItems)
                                     .interactionPermissions(interactionPermissions)
                                     .equipmentSlots(equipmentSlots);
                         });

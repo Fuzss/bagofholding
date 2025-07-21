@@ -3,7 +3,10 @@
   "background_color": "brown",
   "bag_type": "leather",
   "equipment_slots": "any",
-  "filter_container_items": true,
   "interaction_permissions": "always",
+  "item_contents": {
+    "disallow": true,
+    "filter_container_items": true
+  },
   "supported_items": "bagofholding:leather_bag_of_holding"
 }
