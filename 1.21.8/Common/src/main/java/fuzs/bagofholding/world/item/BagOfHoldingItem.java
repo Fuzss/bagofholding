@@ -7,11 +7,12 @@ import fuzs.bagofholding.world.inventory.BagItemMenu;
 import fuzs.bagofholding.world.inventory.LockableInventorySlot;
 import fuzs.iteminteractions.api.v1.ItemContentsHelper;
 import fuzs.iteminteractions.api.v1.provider.ItemContentsBehavior;
+import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import fuzs.puzzleslib.api.network.v4.MessageSender;
 import fuzs.puzzleslib.api.network.v4.PlayerSet;
 import fuzs.puzzleslib.api.util.v1.InteractionResultHelper;
-import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -19,7 +20,6 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -29,11 +29,9 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class BagOfHoldingItem extends Item {
-    private final Holder<MenuType<BagItemMenu>> menuType;
 
-    public BagOfHoldingItem(Properties properties, Holder<MenuType<BagItemMenu>> menuType) {
+    public BagOfHoldingItem(Properties properties) {
         super(properties);
-        this.menuType = menuType;
     }
 
     @Override
@@ -45,8 +43,8 @@ public class BagOfHoldingItem extends Item {
     public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         if (player.isSecondaryUseActive() || !BagOfHolding.CONFIG.get(ServerConfig.class).sneakToOpenBag) {
             ItemStack itemInHand = player.getItemInHand(interactionHand);
-            if (!level.isClientSide) {
-                player.openMenu(this.getMenuProvider(itemInHand));
+            if (level instanceof ServerLevel) {
+                ContainerMenuHelper.openMenu(player, this.getMenuProvider(itemInHand), itemInHand.getItemHolder());
                 player.awardStat(Stats.ITEM_USED.get(this));
                 this.lockMySlot((ServerPlayer) player, itemInHand);
             }
@@ -61,7 +59,7 @@ public class BagOfHoldingItem extends Item {
         return new SimpleMenuProvider((int containerId, Inventory inventory, Player player) -> {
             ItemContentsBehavior behavior = ItemContentsHelper.getItemContentsBehavior(itemStack);
             SimpleContainer itemContainer = behavior.getItemContainer(itemStack, player);
-            return new BagItemMenu(this.menuType, behavior, containerId, inventory, itemContainer);
+            return new BagItemMenu(containerId, inventory, itemContainer, behavior);
         }, itemStack.getHoverName());
     }
 

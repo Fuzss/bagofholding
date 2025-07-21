@@ -11,7 +11,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,49 +21,19 @@ public class BagItemMenu extends AbstractContainerMenu {
     private final ItemContentsBehavior behavior;
     private final int hotbarStartIndex;
 
-    public static MenuType.MenuSupplier<BagItemMenu> createLeatherBagMenu() {
-        return (int containerId, Inventory inventory) -> create(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE,
-                ModRegistry.LEATHER_BAG_OF_HOLDING_ITEM,
-                containerId,
-                inventory
-        );
+    public BagItemMenu(int containerId, Inventory inventory, Holder<Item> item) {
+        this(containerId, inventory, ItemContentsHelper.getItemContentsBehavior(new ItemStack(item)));
     }
 
-    public static MenuType.MenuSupplier<BagItemMenu> createIronBagMenu() {
-        return (int containerId, Inventory inventory) -> create(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE,
-                ModRegistry.IRON_BAG_OF_HOLDING_ITEM,
-                containerId,
-                inventory
-        );
-    }
-
-    public static MenuType.MenuSupplier<BagItemMenu> createGoldenBagMenu() {
-        return (int containerId, Inventory inventory) -> create(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE,
-                ModRegistry.GOLDEN_BAG_OF_HOLDING_ITEM,
-                containerId,
-                inventory
-        );
-    }
-
-    private static BagItemMenu create(Holder<MenuType<BagItemMenu>> holder, Holder<Item> item, int containerId, Inventory inventory) {
-        return new BagItemMenu(holder,
-                ItemContentsHelper.getItemContentsBehavior(new ItemStack(item)),
-                containerId,
-                inventory
-        );
-    }
-
-    private BagItemMenu(Holder<MenuType<BagItemMenu>> holder, ItemContentsBehavior behavior, int containerId, Inventory inventory) {
-        this(holder,
-                behavior,
-                containerId,
+    private BagItemMenu(int containerId, Inventory inventory, ItemContentsBehavior behavior) {
+        this(containerId,
                 inventory,
-                new SimpleContainer(((BagProvider) behavior.provider()).getInventoryHeight() * 9)
-        );
+                new SimpleContainer(((BagProvider) behavior.provider()).getInventoryHeight() * 9),
+                behavior);
     }
 
-    public BagItemMenu(Holder<MenuType<BagItemMenu>> holder, ItemContentsBehavior behavior, int containerId, Inventory inventory, Container container) {
-        super(holder.value(), containerId);
+    public BagItemMenu(int containerId, Inventory inventory, Container container, ItemContentsBehavior behavior) {
+        super(ModRegistry.BAG_MENU_TYPE.value(), containerId);
         this.behavior = behavior;
         checkContainerSize(container, this.getInventoryHeight() * 9);
         this.container = container;

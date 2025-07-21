@@ -16,8 +16,6 @@ public class BagOfHoldingClient implements ClientModConstructor {
 
     @Override
     public void onRegisterMenuScreens(MenuScreensContext context) {
-        context.registerMenuScreen(ModRegistry.LEATHER_BAG_OF_HOLDING_MENU_TYPE.value(), BagItemScreen::new);
-        context.registerMenuScreen(ModRegistry.IRON_BAG_OF_HOLDING_MENU_TYPE.value(), BagItemScreen::new);
-        context.registerMenuScreen(ModRegistry.GOLDEN_BAG_OF_HOLDING_MENU_TYPE.value(), BagItemScreen::new);
+        context.registerMenuScreen(ModRegistry.BAG_MENU_TYPE.value(), BagItemScreen::new);
     }
 }
