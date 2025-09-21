@@ -2,8 +2,9 @@ package fuzs.bagofholding.neoforge;
 
 import fuzs.bagofholding.BagOfHolding;
 import fuzs.bagofholding.data.ModItemContentsProvider;
-import fuzs.bagofholding.data.ModItemTagProvider;
 import fuzs.bagofholding.data.ModRecipeProvider;
+import fuzs.bagofholding.data.tags.ModEnchantmentTagProvider;
+import fuzs.bagofholding.data.tags.ModItemTagProvider;
 import fuzs.bagofholding.init.ModRegistry;
 import fuzs.bagofholding.neoforge.init.NeoForgeModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
@@ -18,8 +19,9 @@ public class BagOfHoldingNeoForge {
         ModConstructor.construct(BagOfHolding.MOD_ID, BagOfHolding::new);
         DataProviderHelper.registerDataProviders(BagOfHolding.MOD_ID,
                 ModRegistry.REGISTRY_SET_BUILDER,
-                ModItemContentsProvider::new,
+                ModItemTagProvider::new,
+                ModEnchantmentTagProvider::new,
                 ModRecipeProvider::new,
-                ModItemTagProvider::new);
+                ModItemContentsProvider::new);
     }
 }

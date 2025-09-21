@@ -1,0 +1,8 @@
+{
+  "values": [
+    {
+      "id": "bagofholding:preservation",
+      "required": false
+    }
+  ]
+}
