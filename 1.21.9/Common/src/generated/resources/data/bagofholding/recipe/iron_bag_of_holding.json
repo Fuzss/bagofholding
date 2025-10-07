@@ -1,0 +1,21 @@
+{
+  "type": "bagofholding:crafting_transmute_shaped",
+  "category": "equipment",
+  "input": "bagofholding:leather_bag_of_holding",
+  "key": {
+    "C": "bagofholding:leather_bag_of_holding",
+    "G": "minecraft:diamond",
+    "I": "minecraft:iron_ingot",
+    "S": "minecraft:string",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "SGS",
+    "ICI",
+    "WIW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bagofholding:iron_bag_of_holding"
+  }
+}

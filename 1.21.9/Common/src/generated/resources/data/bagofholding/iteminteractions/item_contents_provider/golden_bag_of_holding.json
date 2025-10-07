@@ -1,0 +1,12 @@
+{
+  "type": "bagofholding:bag",
+  "background_color": "yellow",
+  "bag_type": "golden",
+  "equipment_slots": "any",
+  "interaction_permissions": "always",
+  "item_contents": {
+    "disallow": true,
+    "filter_container_items": true
+  },
+  "supported_items": "bagofholding:golden_bag_of_holding"
+}
