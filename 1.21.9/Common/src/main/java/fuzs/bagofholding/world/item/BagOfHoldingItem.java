@@ -48,8 +48,9 @@ public class BagOfHoldingItem extends Item {
                 player.awardStat(Stats.ITEM_USED.get(this));
                 this.lockMySlot((ServerPlayer) player, itemInHand);
             }
+
             player.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + level.getRandom().nextFloat() * 0.4F);
-            return InteractionResultHelper.sidedSuccess(itemInHand, level.isClientSide);
+            return InteractionResultHelper.sidedSuccess(itemInHand, level.isClientSide());
         } else {
             return super.use(level, player, interactionHand);
         }
@@ -78,6 +79,7 @@ public class BagOfHoldingItem extends Item {
                                 menu,
                                 itemStack);
                     }
+
                     break;
                 }
             }

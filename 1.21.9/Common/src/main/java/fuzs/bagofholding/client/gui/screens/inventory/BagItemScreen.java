@@ -9,6 +9,7 @@ import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -121,16 +122,14 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
     }
 
     @Override
-    protected boolean checkHotbarKeyPressed(int keyCode, int scanCode) {
-        // prevent number keys from extracting items from a locked slot
-        // vanilla only checks the hovered slot for being accessible, but the hotbar item is directly taken from the inventory, not from a slot,
-        // therefore ignoring all restrictions put on the corresponding slot in the menu
-        // also the hotbar slot has a varying index as the player inventory is always added last, so we store the first hotbar slot during menu construction
+    protected boolean checkHotbarKeyPressed(KeyEvent keyEvent) {
+        // Prevent number keys from extracting items from a locked slot.
+        // Vanilla only checks the hovered slot for being accessible, but the hotbar item is directly taken from the inventory, not from a slot,
+        // therefore ignoring all restrictions put on the corresponding slot in the menu.
+        // Also, the hotbar slot has a varying index as the player inventory is always added last, so we store the first hotbar slot during menu construction.
         if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null) {
             for (int i = 0; i < 9; ++i) {
-                if (KeyMappingHelper.isKeyActiveAndMatches(this.minecraft.options.keyHotbarSlots[i],
-                        keyCode,
-                        scanCode)) {
+                if (KeyMappingHelper.isKeyActiveAndMatches(this.minecraft.options.keyHotbarSlots[i], keyEvent)) {
                     if (this.menu.getSlot(this.menu.getHotbarStartIndex() + i) instanceof LockableInventorySlot slot
                             && slot.locked()) {
                         return true;
@@ -139,7 +138,7 @@ public class BagItemScreen extends AbstractContainerScreen<BagItemMenu> {
             }
         }
 
-        return super.checkHotbarKeyPressed(keyCode, scanCode);
+        return super.checkHotbarKeyPressed(keyEvent);
     }
 
     public boolean isHoveredSlot(Slot slot) {
