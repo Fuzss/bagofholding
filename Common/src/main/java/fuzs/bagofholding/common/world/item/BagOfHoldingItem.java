@@ -34,11 +34,11 @@ public class BagOfHoldingItem extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (player.isSecondaryUseActive() || !BagOfHolding.CONFIG.get(ServerConfig.class).sneakToOpenBag) {
-            ItemStack itemInHand = player.getItemInHand(hand);
             if (level instanceof ServerLevel) {
+                ItemStack itemInHand = player.getItemInHand(hand);
                 ContainerMenuHelper.openMenu(player,
                         this.getMenuProvider(itemInHand.getHoverName(), hand),
-                        itemInHand.typeHolder());
+                        new BagItemMenu.Data(itemInHand.typeHolder(), hand));
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
 
@@ -57,12 +57,8 @@ public class BagOfHoldingItem extends Item {
             SlotAccess slotAccess = SlotAccess.forEquipmentSlot(player, hand.asEquipmentSlot());
             ItemStack itemStack = slotAccess.get();
             ItemStorageHolder holder = ItemStorageHolder.ofItem(itemStack);
-            if (holder.isEmpty()) {
-                return null;
-            } else {
-                Container container = holder.storage().getWritableContainer(itemStack, player, slotAccess);
-                return new BagItemMenu(containerId, inventory, container, holder);
-            }
+            Container container = holder.storage().getWritableContainer(itemStack, player, slotAccess);
+            return new BagItemMenu(containerId, inventory, container, holder, hand);
         }, title);
     }
 
