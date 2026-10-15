@@ -53,12 +53,11 @@ public class BagItemMenu extends ChestMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return super.stillValid(player) && this.holder.storage() instanceof ContainerStorage;
-    }
-
-    @Override
     public void clicked(int slotIndex, int buttonNum, ContainerInput containerInput, Player player) {
+        if (!this.stillValid(player)) {
+            return;
+        }
+
         if (containerInput != ContainerInput.SWAP || buttonNum != player.getInventory().getSelectedSlot()) {
             super.clicked(slotIndex, buttonNum, containerInput, player);
         }
