@@ -3,17 +3,18 @@ package fuzs.bagofholding.common.world.item;
 import fuzs.bagofholding.common.BagOfHolding;
 import fuzs.bagofholding.common.config.ServerConfig;
 import fuzs.bagofholding.common.world.inventory.BagItemMenu;
-import fuzs.iteminteractions.common.api.v2.world.item.storage.ContainerStorage;
 import fuzs.iteminteractions.common.api.v2.world.item.storage.ItemStorageHolder;
 import fuzs.puzzleslib.common.api.container.v1.ContainerMenuHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -31,34 +32,38 @@ public class BagOfHoldingItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (player.isSecondaryUseActive() || !BagOfHolding.CONFIG.get(ServerConfig.class).sneakToOpenBag) {
-            ItemStack itemInHand = player.getItemInHand(interactionHand);
+            ItemStack itemInHand = player.getItemInHand(hand);
             if (level instanceof ServerLevel) {
-                ContainerMenuHelper.openMenu(player, this.getMenuProvider(itemInHand), itemInHand.typeHolder());
+                ContainerMenuHelper.openMenu(player,
+                        this.getMenuProvider(itemInHand.getHoverName(), hand),
+                        itemInHand.typeHolder());
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
 
             playDropContentsSound(level, player);
             return InteractionResult.SUCCESS;
         } else {
-            return super.use(level, player, interactionHand);
+            return super.use(level, player, hand);
         }
     }
 
     /**
      * @see net.minecraft.world.level.block.state.BlockBehaviour#getMenuProvider(BlockState, Level, BlockPos)
      */
-    private MenuProvider getMenuProvider(ItemStack itemStack) {
+    private MenuProvider getMenuProvider(Component title, InteractionHand hand) {
         return new SimpleMenuProvider((int containerId, Inventory inventory, Player player) -> {
+            SlotAccess slotAccess = SlotAccess.forEquipmentSlot(player, hand.asEquipmentSlot());
+            ItemStack itemStack = slotAccess.get();
             ItemStorageHolder holder = ItemStorageHolder.ofItem(itemStack);
-            if (holder.storage() instanceof ContainerStorage storage) {
-                Container container = storage.getItemContainer(itemStack, player, true);
-                return new BagItemMenu(containerId, inventory, container, holder);
-            } else {
+            if (holder.isEmpty()) {
                 return null;
+            } else {
+                Container container = holder.storage().getWritableContainer(itemStack, player, slotAccess);
+                return new BagItemMenu(containerId, inventory, container, holder);
             }
-        }, itemStack.getHoverName());
+        }, title);
     }
 
     /**
